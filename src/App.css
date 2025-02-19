@@ -1,0 +1,56 @@
+/* Navbar */
+
+.navbar {
+  height: 100px;
+}
+
+#masthead {
+  background-image: url("./image.png");
+  height: 80vh;
+  background-size: cover; /* Copre l'intera area */
+  background-position: center; /* Centra l'immagine */
+  background-repeat: no-repeat; /* Evita la ripetizione */
+}
+
+#info {
+  top: 60%;
+}
+
+#space {
+  height: 15vh;
+}
+
+#icon {
+  width: 3rem;
+}
+
+#callToAction {
+  background-image: url("./image2.png");
+  height: 80vh;
+  background-size: cover; /* Copre l'intera area */
+  background-position: center; /* Centra l'immagine */
+  background-repeat: no-repeat; /* Evita la ripetizione */
+}
+
+#floater {
+  position: absolute;
+  top: 10%;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 80vw; /* Maggiore larghezza su schermi piccoli */
+}
+
+#descImg {
+  background-image: url("./image3.png");
+  background-size: cover; /* Copre l'intera area */
+  background-position: right; /* Centra l'immagine */
+  background-repeat: no-repeat; /* Evita la ripetizione */
+}
+
+@media screen and (min-width: 768px) {
+  #floater {
+    left: 3%;
+    transform: none; /* Rimuove la centratura */
+    width: 45vw;
+  }
+}

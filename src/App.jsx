@@ -1,17 +1,18 @@
-import { useState } from 'react'
 import './App.css'
+import Home from './pages/Home'
+import Transfer from './pages/Transfer'
+import Masthead from './components/Masthead'
+import Footer from './components/Footer'
 
-function App() {
-
+export default function App() {
 
   return (
     <>
-      <div className='flex items-center justify-center h-screen bg-blue-100'>
-
-        <h1 className='text-3xl font-bold text-blue-700'>Favignana Booking</h1>
-      </div>
+      <Masthead />
+      <Transfer />
+      <Footer />
     </>
   )
 }
 
-export default App
+
