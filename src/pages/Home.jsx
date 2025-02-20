@@ -56,8 +56,8 @@ export default function Home() {
                 </div>
             </div>
 
-            <div id="description" className="flex w-full">
-                <div className="w-1/2 p-10">
+            <div id="description" className="w-full grid grid-cols-1 md:grid-cols-2">
+                <div className="p-10">
                     {items.map((item, index) => (
                         <div key={index} className="flex justify-start items-start my-4">
                             <div className="bg-b p-5 w-32 h-32">
@@ -70,16 +70,13 @@ export default function Home() {
                         </div>
                     ))}
                 </div>
-                <div className="w-1/2 flex items-center justify-center relative">
-                    <div className="absolute bg-white w-90 flex flex-col items-center justify-center p-10 -left-15 shadow-2xl">
-                        <h4 className="text-4xl mb-3 text-center">Lorem ipsum</h4>
-                        <p className="text-center">Lorem ipsum, dolor sit amet consectetur adipisicing elit. Nemo saepe, asperiores quam quaerat repellendus temporibus aliquid officiis explicabo possimus quae, distinctio cumque reprehenderit repellat porro provident. Fugit blanditiis quasi animi.</p>
-                    </div>
-                    <div className="w-1/8 h-full">
-
-                    </div>
-                    <div className="w-7/8 h-3/4 bg-red-500" id="descImg">
-
+                <div className="flex items-center justify-center md:relative">
+                    <div className="w-1/8 h-full hidden md:block"></div>
+                    <div className="w-full md:w-7/8 md:h-3/4 p-15 flex items-center justify-center md:flex-none" id="descImg">
+                        <div className="md:absolute bg-white w-90 flex flex-col items-center justify-center p-10 top-30 -left-15 shadow-2xl">
+                            <h4 className="text-4xl mb-3 text-center">Lorem ipsum</h4>
+                            <p className="text-center">Lorem ipsum, dolor sit amet consectetur adipisicing elit. Nemo saepe, asperiores quam quaerat repellendus temporibus aliquid officiis explicabo possimus quae, distinctio cumque reprehenderit repellat porro provident. Fugit blanditiis quasi animi.</p>
+                        </div>
                     </div>
                 </div>
             </div>
