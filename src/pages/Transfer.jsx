@@ -1,10 +1,11 @@
 import BookingForm from "../components/BookingForm";
-import Checkout from "../components/Checkout";
 import { PayPalScriptProvider } from "@paypal/react-paypal-js";
 
 export default function Transfer() {
+    const clientID = "AY8h-ZfG6mLJSJgCOItHQs9SfixKHtLsmCkjQQ5th_abrx0W84F2765VAAt8GzHAc7Cs-EhHHBRkNkFS";
+
     const initialOptions = {
-        "client-id": "AY8h-ZfG6mLJSJgCOItHQs9SfixKHtLsmCkjQQ5th_abrx0W84F2765VAAt8GzHAc7Cs-EhHHBRkNkFS",
+        "client-id": clientID,
         currency: "EUR",
         intent: "capture",
     };
@@ -14,21 +15,20 @@ export default function Transfer() {
             <div className="transferInfo p-10">
                 <h2 className="text-4xl text-center mb-3">Lorem, ipsum dolor sit amet consectetur adipisicing elit</h2>
                 <p className="px-auto">
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Quam vel quo error quibusdam praesentium omnis necessitatibus 
+                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Quam vel quo error quibusdam praesentium omnis necessitatibus
                 </p>
             </div>
 
-            <PayPalScriptProvider options={initialOptions}>
-                <BookingForm />
-            </PayPalScriptProvider>
+            <div>
 
-            <div className="flex justify-center items-center mt-10">
-                {/* <PayPalScriptProvider options={initialOptions}>
-                    <Checkout price={price}/>
-                </PayPalScriptProvider> */}
+                <div className="flex items-center justify-center">
+                    <PayPalScriptProvider options={initialOptions}>
+                        <BookingForm />
+                    </PayPalScriptProvider>
+                </div>
+
             </div>
 
-            <div className="h-96"></div>
         </>
     )
 }
