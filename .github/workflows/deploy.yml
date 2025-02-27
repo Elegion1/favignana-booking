@@ -40,12 +40,12 @@ jobs:
       - name: Build
         run: npm run build
         env:
-          VITE_PAYPAL_CLIENT_ID: ${{secrets.VITE_PAYPAL_CLIENT_ID}}
-          VITE_APP_URL: ${{secrets.VITE_APP_URL}}
-          VITE_EXTERNAL_API_URL: ${{secrets.VITE_EXTERNAL_API_URL}}
-          VITE_EMAILJS_SERVICE_ID: ${{secrets.VITE_EMAILJS_SERVICE_ID}}
-          VITE_EMAILJS_PUBLIC_KEY: ${{secrets.VITE_EMAILJS_PUBLIC_KEY}}
-          VITE_ENCRIPTION_SECRET_KEY: ${{secrets.VITE_ENCRIPTION_SECRET_KEY}}
+          VITE_PAYPAL_CLIENT_ID: ${{ secrets.VITE_PAYPAL_CLIENT_ID }}
+          VITE_APP_URL: ${{ secrets.VITE_APP_URL }}
+          VITE_EXTERNAL_API_URL: ${{ secrets.VITE_EXTERNAL_API_URL }}
+          VITE_EMAILJS_SERVICE_ID: ${{ secrets.VITE_EMAILJS_SERVICE_ID }}
+          VITE_EMAILJS_PUBLIC_KEY: ${{ secrets.VITE_EMAILJS_PUBLIC_KEY }}
+          VITE_ENCRIPTION_SECRET_KEY: ${{ secrets.VITE_ENCRIPTION_SECRET_KEY }}
       - name: Setup Pages
         uses: actions/configure-pages@v4
       - name: Upload artifact
