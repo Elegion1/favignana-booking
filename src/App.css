@@ -1,0 +1,76 @@
+.navbar {
+  height: 100px;
+}
+
+#masthead {
+  background-image: url("../public/image.png");
+  height: 80vh;
+  background-size: cover; /* Copre l'intera area */
+  background-position: center; /* Centra l'immagine */
+  background-repeat: no-repeat; /* Evita la ripetizione */
+}
+
+#info {
+  top: 60%;
+}
+
+#space {
+  height: 15vh;
+}
+
+#icon {
+  width: 3rem;
+}
+
+#callToAction {
+  background-image: url("../public/image2.png");
+  height: 80vh;
+  background-size: cover; /* Copre l'intera area */
+  background-position: center; /* Centra l'immagine */
+  background-repeat: no-repeat; /* Evita la ripetizione */
+}
+
+#floater {
+  position: absolute;
+  top: 10%;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 80vw; /* Maggiore larghezza su schermi piccoli */
+}
+
+#descImg {
+  background-image: url("../public/image3.png");
+  background-size: cover; /* Copre l'intera area */
+  background-position: right; /* Centra l'immagine */
+  background-repeat: no-repeat; /* Evita la ripetizione */
+}
+
+#transferForm {
+  background-image: url("../public/image4.png");
+  background-size: contain; /* Copre l'intera area */
+  background-position: bottom; /* Centra l'immagine */
+  background-repeat: no-repeat; /* Evita la ripetizione */
+}
+
+#contactImage {
+
+  background-image: url("../public/contacts.png");
+  background-size: contain;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+@media screen and (min-width: 768px) {
+  #floater {
+    left: 3%;
+    transform: none; /* Rimuove la centratura */
+    width: 45vw;
+  }
+}
+
+@media screen and (max-width: 1092px) {
+  #transferForm {
+    background-size: cover; /* Copre l'intera area */
+    background-position: center;
+  }
+}
