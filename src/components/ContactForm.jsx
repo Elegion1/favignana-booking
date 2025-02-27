@@ -1,5 +1,6 @@
 import { useRef, useState } from 'react';
 import emailjs from 'emailjs-com';
+import { getLabel } from '../utils/labels';
 
 export default function ContactForm() {
     const emailJSPublicKey = import.meta.env.VITE_EMAILJS_PUBLIC_KEY;
@@ -39,28 +40,28 @@ export default function ContactForm() {
                 <form ref={form} onSubmit={sendEmail}>
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-5 mb-5">
                         <div className="bg-b rounded-md flex flex-col p-3">
-                            <label htmlFor="name">Nome</label>
+                            <label htmlFor="name">{getLabel("name")}</label>
                             <input className={classes} id="name" name="name" type="text" placeholder="Mario" required />
                         </div>
                         <div className="bg-b rounded-md flex flex-col p-3">
-                            <label htmlFor="surname">Cognome</label>
+                            <label htmlFor="surname">{getLabel("surname")}</label>
                             <input className={classes} id="surname" name="surname" type="text" placeholder="Rossi" required />
                         </div>
                     </div>
 
                     <div className="bg-b rounded-md flex flex-col p-3 mb-5">
-                        <label htmlFor="email">Email</label>
+                        <label htmlFor="email">{getLabel("email")}</label>
                         <input className={classes} id="email" name="email" type="email" placeholder="mariorossi@mail.com" required />
                     </div>
 
                     <div className="bg-b rounded-md flex flex-col p-3 mb-5">
-                        <label htmlFor="phone">Telefono</label>
+                        <label htmlFor="phone">{getLabel("phone")}</label>
                         <input className={classes} id="phone" name="phone" type="tel" placeholder="+39 349 567 8922" required />
                     </div>
 
                     <div className="bg-b rounded-md flex flex-col p-3 mb-5">
-                        <label htmlFor="message">Messaggio</label>
-                        <textarea className={classes} id="message" name="message" rows={4} placeholder="Inserisci il messaggio che vuoi inviare" required></textarea>
+                        <label htmlFor="message">{getLabel("message")}</label>
+                        <textarea className={classes} id="message" name="message" rows={4} placeholder={getLabel("insertMessage")} required></textarea>
                     </div>
 
                     <button
@@ -74,10 +75,14 @@ export default function ContactForm() {
                                     <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
                                     <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v4l3-3-3-3v4a8 8 0 100 16v-4l-3 3 3 3v-4a8 8 0 01-8-8z"></path>
                                 </svg>
-                                INVIO...
+                                <span className='uppercase'>
+                                    {getLabel("sending")}
+                                </span>
                             </>
                         ) : (
-                            "INVIA"
+                            <span className='uppercase'>
+                                {getLabel("send")}
+                            </span>
                         )}
                     </button>
                 </form>

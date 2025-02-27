@@ -1,4 +1,5 @@
 import { useState, useEffect, useMemo, useRef, forwardRef } from 'react';
+import { getLabel } from '../utils/labels';
 import ErrorMessage from './ErrorMessage';
 import { PayPalButtons, usePayPalScriptReducer } from "@paypal/react-paypal-js";
 import emailjs from 'emailjs-com';
@@ -9,7 +10,7 @@ const BookingForm = forwardRef((props, ref) => {
     const emailJSPublicKey = import.meta.env.VITE_EMAILJS_PUBLIC_KEY;
     const emailJSServiceID = import.meta.env.VITE_EMAILJS_SERVICE_ID;
     const encriptionSecretKey = import.meta.env.VITE_ENCRYPTION_SECRET_KEY;
-    
+
     const bookingFormRef = ref || useRef(null);
     const [showReturn, setShowReturn] = useState(false);
     const [showPayment, setShowPayment] = useState(false);
@@ -311,38 +312,38 @@ const BookingForm = forwardRef((props, ref) => {
             <form onSubmit={handleSubmit}>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-5 mb-5">
                     <div className="bg-b rounded-md flex flex-col p-3">
-                        <label htmlFor="name">Nome</label>
+                        <label htmlFor="name">{getLabel("name")}</label>
                         <input className={classes} id="name" type="text" placeholder="Mario" value={formData.name} onChange={handleChange} />
                         {errors.name && <ErrorMessage message={errors.name} />}
                     </div>
                     <div className="bg-b rounded-md flex flex-col p-3">
-                        <label htmlFor="surname">Cognome</label>
+                        <label htmlFor="surname">{getLabel("surname")}</label>
                         <input className={classes} id="surname" type="text" placeholder="Rossi" value={formData.surname} onChange={handleChange} />
                         {errors.surname && <ErrorMessage message={errors.surname} />}
                     </div>
                 </div>
 
                 <div className="bg-b rounded-md flex flex-col p-3 mb-5">
-                    <label htmlFor="email">Email</label>
+                    <label htmlFor="email">{getLabel("email")}</label>
                     <input className={classes} id="email" type="email" placeholder="mariorossi@mail.com" value={formData.email} onChange={handleChange} />
                     {errors.email && <ErrorMessage message={errors.email} />}
                 </div>
 
                 <div className="bg-b rounded-md flex flex-col p-3 mb-5">
-                    <label htmlFor="phone">Telefono</label>
+                    <label htmlFor="phone">{getLabel("phone")}</label>
                     <input className={classes} id="phone" type="tel" placeholder="+39 349 567 8922" value={formData.phone} onChange={handleChange} />
                     {errors.phone && <ErrorMessage message={errors.phone} />}
                 </div>
 
                 <div className="bg-b rounded-md flex flex-col p-3 mb-5">
                     <div className='flex justify-between'>
-                        <label htmlFor="route">Tratta</label>
+                        <label htmlFor="route">{getLabel("route")}</label>
                         {formData.duration && (
-                            <label htmlFor="route">Durata: {formData.duration} H</label>
+                            <label htmlFor="route">{getLabel("duration")}: {formData.duration} H</label>
                         )}
                     </div>
                     <select className={classes} name="route" id="route" value={formData.route} onChange={handleRouteChange}>
-                        <option value="">Seleziona una tratta</option>
+                        <option value="">{getLabel("selectRoute")}</option>
                         {routes.map((route, index) => (
                             <option key={index} value={`${route.departure} - ${route.arrival}`}>{`${route.departure} - ${route.arrival}`}</option>
                         ))}
@@ -351,7 +352,7 @@ const BookingForm = forwardRef((props, ref) => {
                 </div>
 
                 <div className="bg-b rounded-md flex flex-col px-3 py-1 mb-5">
-                    <label className='pt-1 mb-1' htmlFor="passengers">Passeggeri</label>
+                    <label className='pt-1 mb-1' htmlFor="passengers">{getLabel("passengers")}</label>
                     <div className={`flex items-center justify-between ${classes}`}>
                         <button className="border rounded px-3 py-2" type="button" onClick={handleDecrement}>
                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-dash" viewBox="0 0 16 16">
@@ -379,12 +380,12 @@ const BookingForm = forwardRef((props, ref) => {
 
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-5 mb-5">
                     <div className="bg-b rounded-md flex flex-col p-3">
-                        <label htmlFor="dateStart">Data Partenza</label>
+                        <label htmlFor="dateStart">{getLabel("dateStart")}</label>
                         <input className={classes} id="dateStart" type="date" min={today} value={formData.dateStart} onChange={handleChange} />
                         {errors.dateStart && <ErrorMessage message={errors.dateStart} />}
                     </div>
                     <div className="bg-b rounded-md flex flex-col p-3">
-                        <label htmlFor="timeStart">Orario Partenza</label>
+                        <label htmlFor="timeStart">{getLabel("timeStart")}</label>
                         <input className={classes} id="timeStart" type="time" value={formData.timeStart} onChange={handleChange} />
                         {errors.timeStart && <ErrorMessage message={errors.timeStart} />}
                     </div>
@@ -393,10 +394,10 @@ const BookingForm = forwardRef((props, ref) => {
                 {!showReturn && (
                     <button
                         type="button"
-                        className="bg-white rounded-md flex justify-center items-center p-3 border-2 w-full mb-5"
+                        className="bg-white rounded-md flex justify-center items-center p-3 border-2 w-full mb-5 uppercase"
                         onClick={() => setShowReturn(true)}
                     >
-                        AGGIUNGI RITORNO
+                        {getLabel("addReturn")}
                     </button>
                 )}
 
@@ -404,12 +405,12 @@ const BookingForm = forwardRef((props, ref) => {
                     <div className="relative">
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-5 mb-5">
                             <div className="bg-b rounded-md flex flex-col p-3">
-                                <label htmlFor="dateReturn">Data Ritorno</label>
+                                <label htmlFor="dateReturn">{getLabel("dateReturn")}</label>
                                 <input className={classes} id="dateReturn" type="date" min={formData.dateStart || today} value={formData.dateReturn} onChange={handleChange} />
                                 {errors.dateReturn && <ErrorMessage message={errors.dateReturn} />}
                             </div>
                             <div className="bg-b rounded-md flex flex-col p-3">
-                                <label htmlFor="timeReturn">Orario Ritorno</label>
+                                <label htmlFor="timeReturn">{getLabel("timeReturn")}</label>
                                 <input className={classes} id="timeReturn" type="time" value={formData.timeReturn} onChange={handleChange} />
                                 {errors.timeReturn && <ErrorMessage message={errors.timeReturn} />}
                             </div>
@@ -423,13 +424,13 @@ const BookingForm = forwardRef((props, ref) => {
                 )}
 
                 <div className="bg-b rounded-md flex flex-col p-3 mb-5">
-                    <label htmlFor="message">Note</label>
-                    <input className={classes} id="message" type="text" placeholder="Inserisci eventuali informazioni aggiuntive" value={formData.message} onChange={handleChange} />
+                    <label htmlFor="message">{getLabel("notes")}</label>
+                    <input className={classes} id="message" type="text" placeholder={getLabel("messagePlaceholder")} value={formData.message} onChange={handleChange} />
                     {errors.message && <ErrorMessage message={errors.message} />}
                 </div>
 
                 <div className="bg-b rounded-md flex flex-col p-3 mb-5">
-                    <span>Prezzo</span>
+                    <span>{getLabel("price")}</span>
                     <input
                         className={classes}
                         type="text"
@@ -439,7 +440,7 @@ const BookingForm = forwardRef((props, ref) => {
                 </div>
 
                 {!showPayment && (
-                    <button type="submit" className="bg-c text-white rounded-md flex justify-center items-center p-3 w-full ">VAI AL PAGAMENTO</button>
+                    <button type="submit" className="bg-c text-white rounded-md flex justify-center items-center p-3 w-full uppercase">{getLabel("goToPayment")}</button>
                 )}
             </form>
 
@@ -451,16 +452,16 @@ const BookingForm = forwardRef((props, ref) => {
                         <div className="d-flex items-center justify-center">
                             <button
                                 type="button"
-                                className="bg-c text-white rounded-md flex justify-center items-center p-3 w-full my-5"
+                                className="bg-c text-white rounded-md flex justify-center items-center p-3 w-full my-5 uppercase"
                                 onClick={() => setShowPayment(false)}
                             >
-                                INDIETRO
+                                {getLabel("back")}
                             </button>
                         </div>
                         <div className="d-flex items-center justify-center">
                             <div className="checkout">
                                 {isPending ? (
-                                    <p>LOADING...</p>
+                                    <p className='uppercase'>{getLabel("loading")}</p>
                                 ) : (
                                     <PayPalButtons
                                         style={{ layout: "vertical" }}
@@ -478,16 +479,16 @@ const BookingForm = forwardRef((props, ref) => {
                 <div className="bg-b rounded-md flex flex-col p-3">
                     {paymentStatus === 'COMPLETED' ? (
                         <div className="text-green-600">
-                            <h2>Pagamento completato con successo!</h2>
-                            <p>Grazie per la tua prenotazione. Riceverai una conferma via email.</p>
+                            <h2>{getLabel("payment")}</h2>
+                            <p>{getLabel("thankYouBooking")}</p>
                         </div>
                     ) : (
                         <div className="text-red-600">
-                            <h2>Pagamento non riuscito</h2>
-                            <p>Qualcosa è andato storto con il pagamento. Riprova più tardi o contatta l'assistenza.</p>
+                            <h2>{getLabel("paymentError")}</h2>
+                            <p>{getLabel("paymentErrorDescription")}</p>
                         </div>
                     )}
-                    <button type="button" className="bg-c text-white rounded-md flex justify-center items-center p-3 w-full mt-5" onClick={() => window.location.reload()}>TORNA ALLA HOME</button>
+                    <button type="button" className="bg-c text-white rounded-md flex justify-center items-center p-3 w-full mt-5" onClick={() => window.location.reload()}>{getLabel("backHome")}</button>
                 </div>
             )}
         </div>
@@ -495,23 +496,3 @@ const BookingForm = forwardRef((props, ref) => {
 });
 
 export default BookingForm;
-
-// Prezzo base: 100€
-// incremento: 5€
-
-// Pax: 1 Prezzo 100€
-// Pax: 2 Prezzo 100€
-// Pax: 3 Prezzo 100€
-// Pax: 4 Prezzo 100€
-// Pax: 5 Prezzo 105€
-// Pax: 6 Prezzo 110€
-// Pax: 7 Prezzo 115€
-// Pax: 8 Prezzo 120€
-// Pax: 9 Prezzo 220€
-// Pax: 10 Prezzo 220€
-// Pax: 11 Prezzo 220€
-// Pax: 12 Prezzo 220€
-// Pax: 13 Prezzo 225€
-// Pax: 14 Prezzo 230€
-// Pax: 15 Prezzo 235€
-// Pax: 16 Prezzo 240€

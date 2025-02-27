@@ -1,4 +1,5 @@
 import { useRef, forwardRef } from "react";
+import { getLabel } from "../utils/labels";
 
 const Info = forwardRef((props, ref) => {
     const infoRef = ref || useRef(null);
@@ -6,13 +7,13 @@ const Info = forwardRef((props, ref) => {
     let items = [
         {
             image: './taxi.png',
-            title: 'Taxi Privato',
-            body: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Obcaecati voluptates ipsum facilis rerum necessitatibus provident? Aliquid, debitis! Odio, ipsum quas enim tempore aut dignissimos magnam recusandae sunt quibusdam expedita ullam.'
+            title: getLabel("taxiInfoTitle"),
+            body: getLabel("taxiInfoBody"),
         },
         {
             image: './ship.png',
-            title: 'Transfer Favignana',
-            body: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Obcaecati voluptates ipsum facilis rerum necessitatibus provident? Aliquid, debitis! Odio, ipsum quas enim tempore aut dignissimos magnam recusandae sunt quibusdam expedita ullam.'
+            title: getLabel("shipInfoTitle"),
+            body: getLabel("shipInfoBody"),
         },
     ];
 

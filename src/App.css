@@ -4,7 +4,6 @@
 
 #masthead {
   background-image: url("../public/image.png");
-  height: 80vh;
   background-size: cover; /* Copre l'intera area */
   background-position: center; /* Centra l'immagine */
   background-repeat: no-repeat; /* Evita la ripetizione */

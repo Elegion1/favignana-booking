@@ -1,6 +1,7 @@
 
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import './App.css';
+import { LanguageProvider } from './context/LanguageProvider';
 
 import Layout from './pages/Layout';
 
@@ -14,18 +15,21 @@ export default function App() {
 
   return (
     <>
+      <LanguageProvider>
 
-      <BrowserRouter>
-      
-        <Routes>
-          <Route path="/" element={<Layout />}>
-            <Route index element={<Home />} />
-            <Route path="transfer" element={<Transfer />} />
-            <Route path="contact" element={<Contact />} />
-          </Route>
-        </Routes>
+        <BrowserRouter>
 
-      </BrowserRouter>
+          <Routes>
+            <Route path="/" element={<Layout />}>
+              <Route index element={<Home />} />
+              <Route path="transfer" element={<Transfer />} />
+              <Route path="contact" element={<Contact />} />
+            </Route>
+          </Routes>
+
+        </BrowserRouter>
+
+      </LanguageProvider>
 
     </>
 

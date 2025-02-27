@@ -1,4 +1,5 @@
 import { useState, useEffect, useRef } from "react";
+import { getLabel } from "../utils/labels";
 import BookingForm from "../components/BookingForm";
 import { PayPalScriptProvider } from "@paypal/react-paypal-js";
 
@@ -30,9 +31,9 @@ export default function Transfer() {
     return (
         <>
             <div id="transferInfo" className="p-10">
-                <h2 className="text-4xl text-center mb-3">Lorem, ipsum dolor sit amet consectetur adipisicing elit</h2>
+                <h2 className="text-4xl text-center mb-3">{getLabel("transferTitle")}</h2>
                 <p className="px-auto">
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Quam vel quo error quibusdam praesentium omnis necessitatibus
+                    {getLabel("transferDescription")}
                 </p>
             </div>
             <div id="space" style={{ height: bookingFormHeight - 1000 }}></div>
