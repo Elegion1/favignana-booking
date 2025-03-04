@@ -2,6 +2,10 @@
   height: 100px;
 }
 
+p, span {
+  white-space: pre-line;
+}
+
 #masthead {
   background-image: url("../public/image.png");
   background-size: cover; /* Copre l'intera area */
@@ -52,7 +56,6 @@
 }
 
 #contactImage {
-
   background-image: url("../public/contacts.png");
   background-size: contain;
   background-position: center;

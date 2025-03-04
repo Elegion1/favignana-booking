@@ -16,6 +16,7 @@ const BookingForm = forwardRef((props, ref) => {
     const [showPayment, setShowPayment] = useState(false);
     const [paymentStatus, setPaymentStatus] = useState('');
     const [dataToSubmit, setDataToSubmit] = useState(null);
+
     const [formData, setFormData] = useState({
         name: '',
         surname: '',
@@ -437,6 +438,12 @@ const BookingForm = forwardRef((props, ref) => {
                         value={`${calculatePrice()} €`}
                         readOnly
                     />
+                </div>
+                <div className='mb-5'>
+                    <label className='flex items-center justify-center'>
+                        <input required type="checkbox" id="acceptTerms" className="form-checkbox h-5 w-5 text-blue-600" />
+                        <span className="ml-2 text-gray-700">{getLabel("iAccept")} <a className='capitalize underline' href="/terms-and-conditions">{getLabel("termsConditions")}</a></span>
+                    </label>
                 </div>
 
                 {!showPayment && (

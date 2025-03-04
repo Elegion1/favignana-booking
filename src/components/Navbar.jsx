@@ -1,11 +1,12 @@
 import { NavLink } from 'react-router-dom';
 import { getLabel } from '../utils/labels';
-import { useLanguage } from '../context/LanguageProvider';
+
 
 export default function Navbar() {
-    const { language, changeLanguage } = useLanguage();
+    
     const activeClass = "text-blue-800 font-bold capitalize";
     const inactiveClass = "text-b capitalize";
+    
 
     const text = [
         {
@@ -44,10 +45,7 @@ export default function Navbar() {
                 </div>
 
             </div>
-            <div>
-                <button onClick={() => changeLanguage("it")}>Italiano</button>
-                <button onClick={() => changeLanguage("en")}>English</button>
-            </div>
+           
         </>
     );
 }

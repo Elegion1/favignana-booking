@@ -63,6 +63,12 @@ export default function ContactForm() {
                         <label htmlFor="message">{getLabel("message")}</label>
                         <textarea className={classes} id="message" name="message" rows={4} placeholder={getLabel("insertMessage")} required></textarea>
                     </div>
+                    <div className='mb-5'>
+                        <label className='flex items-center justify-center'>
+                            <input required type="checkbox" id="acceptTerms" className="form-checkbox h-5 w-5 text-blue-600" />
+                            <span className="ml-2 text-gray-700">{getLabel("iAccept")} <a className='capitalize underline' href="/terms-and-conditions">{getLabel("termsConditions")}</a></span>
+                        </label>
+                    </div>
 
                     <button
                         type="submit"

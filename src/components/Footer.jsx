@@ -4,27 +4,27 @@ export default function Footer() {
     const contacts = [
         {
             image: "./people.png",
-            class: "text-4xl capitalize",
+            class: "text-3xl capitalize",
             title: `${getLabel("contacts")}`,
             body: "",
         },
         {
             image: "./phone.png",
-            class: "text-2xl",
+            class: "text-xl",
             title: `${getLabel("phone")}:`,
             body: "0123456789",
         },
         {
             image: "./whatsapp.png",
-            class: "text-2xl",
+            class: "text-xl",
             title: `${getLabel("whatsapp")}:`,
             body: "0123456789",
         },
         {
             image: "./email.png",
-            class: "text-2xl",
+            class: "text-xl",
             title: `${getLabel("email")}:`,
-            body: "favignanatravel@info.it",
+            body: "info@favignana-transfer.it",
         },
 
     ]
@@ -35,14 +35,16 @@ export default function Footer() {
                     <div className="flex flex-col justify-center md:items-start items-center">
                         <h5 className="text-2xl uppercase mb-3">{getLabel("footerTitle")}</h5>
                         <p>{getLabel("footerBody")}</p>
+                        <a className="mt-10 text-c" href="/terms-and-conditions">{getLabel("termsConditions")}</a>
                     </div>
                     <div className="flex flex-col justify-center items-start mx-auto">
                         {contacts.map((contact, index) => (
                             <div key={index} className="flex items-center justify-center mb-5">
                                 <img src={contact.image} alt="" className="w-12" />
-                                <p className={`ms-10 ${contact.class}`}>{contact.title} {contact.body}</p>
+                                <p className={`ms-10 text-wrap ${contact.class}`}>{contact.title} {contact.body}</p>
                             </div>
                         ))}
+
                     </div>
                 </div>
                 <p className="text-center">All rights reserved</p>
