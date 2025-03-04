@@ -9,12 +9,6 @@ export default function Footer() {
             body: "",
         },
         {
-            image: "./phone.png",
-            class: "text-xl",
-            title: `${getLabel("phone")}:`,
-            body: "0123456789",
-        },
-        {
             image: "./whatsapp.png",
             class: "text-xl",
             title: `${getLabel("whatsapp")}:`,
