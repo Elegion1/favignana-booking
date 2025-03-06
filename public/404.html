@@ -1,7 +1,15 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <meta http-equiv="refresh" content="0; url='/'" />
+    <meta charset="UTF-8" />
+    <title>Page Not Found</title>
+    <script type="text/javascript">
+      // Reindirizza alla root ma mantiene il path
+      var path = window.location.pathname;
+      window.location.replace("/?redirect=" + path);
+    </script>
   </head>
-  <body></body>
+  <body>
+    <h1>Redirecting...</h1>
+  </body>
 </html>
