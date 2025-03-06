@@ -1,4 +1,4 @@
-import { HashRouter, Routes, Route } from 'react-router-dom';
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import './App.css';
 
 import Layout from './pages/Layout';
@@ -9,7 +9,7 @@ import TermsAndConditions from './pages/TermsAndConditions';
 
 function AppContent() {
   return (
-    <HashRouter>
+    <BrowserRouter>
       <Routes>
         <Route path="/" element={<Layout />}>
           <Route index element={<Home />} />
@@ -18,7 +18,7 @@ function AppContent() {
           <Route path="terms-and-conditions" element={<TermsAndConditions />} />
         </Route>
       </Routes>
-    </HashRouter>
+    </BrowserRouter>
   );
 }
 
