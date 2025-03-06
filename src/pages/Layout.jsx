@@ -1,5 +1,6 @@
 import Masthead from '../components/Masthead';
 import Footer from '../components/Footer';
+import Navbar from '../components/Navbar';
 import { Outlet, useLocation } from 'react-router-dom';
 import { getLabel } from '../utils/labels';
 
@@ -17,6 +18,7 @@ export default function Layout() {
 
     return (
         <>
+            <Navbar />
             <Masthead title={title} />
             <Outlet />
             <Footer />

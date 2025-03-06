@@ -50,7 +50,7 @@ export default function Home() {
                     <p className="mb-4">{getLabel("CTAAbstract")}</p>
                     <h2 className="text-2xl mb-3">{getLabel("CTATitle")}</h2>
                     <p className="mb-6">{getLabel("CTABody")}</p>
-                    <a className="bg-c p-4 uppercase text-a" href="/transfer">
+                    <a className="bg-c p-4 uppercase text-a" href="/#/transfer">
                         {getLabel("CTAButton")}
                     </a>
                 </div>
@@ -59,11 +59,11 @@ export default function Home() {
             <div id="description" className="w-full grid grid-cols-1 md:grid-cols-2">
                 <div className="p-10">
                     {items.map((item, index) => (
-                        <div key={index} className="flex justify-start items-start my-4">
-                            <div className="bg-b p-5 w-32 h-32">
+                        <div key={index} className="flex justify-start items-start mb-10 flex-col md:flex-row">
+                            <div className="bg-b p-5 w-32 h-32 mx-auto md:mx-0">
                                 <img src={item.image} alt={item.image} />
                             </div>
-                            <div className="ms-3 w-1/2">
+                            <div className="ms-3 md:w-1/2">
                                 <h4 className="text-2xl">{item.title}</h4>
                                 <p className="text-xs">{item.body}</p>
                             </div>

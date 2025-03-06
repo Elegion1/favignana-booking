@@ -5,7 +5,7 @@ export default function Contact() {
     return (
         <>
             <div>
-                <h2 className="text-4xl text-center my-3">{getLabel("contactUsTitle")}</h2>
+                <h2 className="text-4xl text-center mt-10 mb-5">{getLabel("contactUsTitle")}</h2>
                 <p className="text-center">
                     {getLabel("contactUsDescription")}
                 </p>

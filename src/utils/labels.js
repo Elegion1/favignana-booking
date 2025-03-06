@@ -69,7 +69,7 @@ export const labels = {
       "Servizio transfer da e per gli aeroporti di Trapani e Palermo, con arrivo diretto al porto di Trapani per l'imbarco verso Favignana",
     homeMasterTitle: "Favignana Transfer",
     transferMasterTitle: "Prenota il tuo transfer",
-    contactMasterTitle: "Contattaci per info e prenotazioni",
+    contactMasterTitle: "Contattaci",
     transferDescription:
       "Favignana Transfer offre un servizio taxi privato per raggiungere l’isola di Favignana. Taxi senza condivisione del mezzo. Nessuna attesa. \n La scelta più economica e comoda che in soli 25 minuti collega l’aeroporto di Trapani al porto di Trapani, punto di imbarco per le Isole Egadi. Arrivati in sala arrivi dell’aeroporto, troverai l’autista con il cartello che indica il vostro cognome. \n Percorrendo l'affascinante strada delle saline raggiungerai la città di Trapani.\n I nostri mezzi sono forniti di regolare licenza. I servizi vengono svolti da taxi ufficiali o noleggio con conducente. Disponiamo anche di auto di lusso per esigenze particolari. \n Saremo lieti di rendere la tua vacanza migliore. \n Siamo un’azienda locale, esperti della zona, pronti a soddisfare ogni curiosità della provincia di Trapani. Scegli il meglio per i tuoi spostamenti: professionalità e trasparenza sono il nostro marchio. \n Se possiedi un conto PayPal puoi acquistare i nostri servizi in tre comode rate senza interessi. Per maggiori info visita il sito PayPal. Le tariffe, offerte o scontistiche varie sono soggette a disponibilità e possono subire variazioni in base al periodo. \n Contattaci per ulteriori informazioni o per prenotare il tuo transfer!",
     termsConditions: "Termini e condizioni",
