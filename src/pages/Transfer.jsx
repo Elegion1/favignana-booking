@@ -31,11 +31,12 @@ export default function Transfer() {
     return (
         <>
             <div id="transferInfo" className="p-10">
-                <h2 className="text-4xl text-center mb-3">{getLabel("transferTitle")}</h2>
-                <p className="px-auto">
+                <h2 className="text-4xl text-center mb-5">{getLabel("transferTitle")}</h2>
+                <p className="px-30">
                     {getLabel("transferDescription")}
                 </p>
             </div>
+
             <div id="space" style={{ height: bookingFormHeight - 1000 }}></div>
             <div id="transferForm" style={{ height: bookingFormHeight + 100 }} className="w-full flex items-center justify-center relative">
                 <div className="w-full md:w-1/2 p-1 absolute -top-20">

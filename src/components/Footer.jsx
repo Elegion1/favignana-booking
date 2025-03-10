@@ -41,7 +41,7 @@ export default function Footer() {
 
                     </div>
                 </div>
-                <p className="text-center">All rights reserved</p>
+                <p className="text-center text-gray-400">All rights reserved</p>
             </div>
         </>
     );

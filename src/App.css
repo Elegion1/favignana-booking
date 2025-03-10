@@ -6,6 +6,16 @@ p, span {
   white-space: pre-line;
 }
 
+button:hover {
+  transform: scale(0.99);
+  transition: 0.3s;
+}
+
+a:hover {
+ filter: brightness(1.1); 
+ transition: 0.3s;
+}
+
 #masthead {
   background-image: url("../public/image.png");
   background-size: cover; /* Copre l'intera area */
