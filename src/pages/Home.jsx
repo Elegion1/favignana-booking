@@ -50,7 +50,7 @@ export default function Home() {
                     <p className="mb-4">{getLabel("CTAAbstract")}</p>
                     <h2 className="text-2xl mb-3">{getLabel("CTATitle")}</h2>
                     <p className="mb-6">{getLabel("CTABody")}</p>
-                    <a className="bg-c p-4 uppercase text-a" href="/#/transfer">
+                    <a className="bg-c p-4 uppercase text-a" href="/transfer">
                         {getLabel("CTAButton")}
                     </a>
                 </div>

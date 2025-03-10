@@ -29,7 +29,7 @@ export default function Footer() {
                     <div className="flex flex-col justify-center md:items-start items-center">
                         <h5 className="text-2xl uppercase mb-3">{getLabel("footerTitle")}</h5>
                         <p>{getLabel("footerBody")}</p>
-                        <a className="mt-10 text-c" href="/#/terms-and-conditions">{getLabel("termsConditions")}</a>
+                        <a className="mt-10 text-c" href="/terms-and-conditions">{getLabel("termsConditions")}</a>
                     </div>
                     <div className="flex flex-col justify-center items-start mx-auto">
                         {contacts.map((contact, index) => (
