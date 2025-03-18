@@ -32,7 +32,7 @@ export default function Transfer() {
         <>
             <div id="transferInfo" className="p-10">
                 <h2 className="text-4xl text-center mb-5">{getLabel("transferTitle")}</h2>
-                <p className="px-30">
+                <p className="md:px-30 text-justify">
                     {getLabel("transferDescription")}
                 </p>
             </div>
