@@ -32,6 +32,7 @@ const BookingForm = forwardRef((props, ref) => {
         code: '',
         price: 0,
         duration: '',
+        minimumPassengers: 1,
     });
 
     const [errors, setErrors] = useState({});
@@ -50,12 +51,20 @@ const BookingForm = forwardRef((props, ref) => {
         {
             id: 1,
             departure: "Aeroporto Trapani Birgi V. Florio",
-            arrival: "Favignana",
-            price: 100,
-            incrementPrice: 5,
-            duration: 1,
+            arrival: "Trapani Porto",
+            price: 15,
+            minimumPassengers: 2,
+            duration: 20,
         },
-        // Aggiungi qui altre rotte manualmente
+        {
+            id: 1,
+            departure: "Aeroporto Palermo Falcone Borsellino",
+            arrival: "Trapani Porto",
+            price: 25,
+            minimumPassengers: 4,
+            duration: 60,
+        },
+
     ];
 
     const handleChange = (e) => {
@@ -101,6 +110,7 @@ const BookingForm = forwardRef((props, ref) => {
             ...prevData,
             route: e.target.value,
             duration: selectedRoute ? selectedRoute.duration : 0, // Imposta la durata se esiste
+            minimumPassengers: selectedRoute ? selectedRoute.minimumPassengers : 1,
         }));
 
         setErrors((prevErrors) => ({
@@ -119,6 +129,7 @@ const BookingForm = forwardRef((props, ref) => {
         if (!formData.dateStart) newErrors.dateStart = 'Data Partenza è richiesta';
         if (!formData.timeStart) newErrors.timeStart = 'Orario Partenza è richiesto';
         if (!formData.message) newErrors.message = 'Le note sono richieste';
+        if (!formData.minimumPassengers) newErrors.message = 'Il numero dei passeggeri è richiesto';
         if (showReturn) {
             if (!formData.dateReturn) newErrors.dateReturn = 'Data Ritorno è richiesta';
             if (!formData.timeReturn) newErrors.timeReturn = 'Orario Ritorno è richiesto';
@@ -135,21 +146,16 @@ const BookingForm = forwardRef((props, ref) => {
 
         const { price: basePrice, incrementPrice } = selectedRoute;
         const passengers = formData.passengers;
-        const extraPassengers = Math.max(0, passengers - 4); // Usa Math.max per trovare il numero di passeggeri extra
+        let prezzo = 0;
 
         let totalPrice = basePrice; // Inizializza il prezzo totale con il prezzo base
 
-        if (passengers > 4 && passengers <= 8) {
-            totalPrice += incrementPrice * extraPassengers;
-        } else if (passengers > 8 && passengers <= 12) {
-            totalPrice = (basePrice * 2) + (incrementPrice * (extraPassengers > 8 ? extraPassengers - 8 : 4));
-        } else if (passengers > 12) {
-            totalPrice = (basePrice * 2) + (incrementPrice * 4) + (incrementPrice * (extraPassengers > 12 ? extraPassengers - 12 : 4));
-        }
+        totalPrice = basePrice * passengers;
 
         // Se è previsto un ritorno, raddoppia il prezzo
         if (showReturn) {
-            totalPrice *= 2;
+            totalPrice *= 2; // Raddoppia il prezzo per il ritorno
+            totalPrice *= 0.9; // Applica lo sconto del 10%
         }
 
         return totalPrice;
@@ -340,7 +346,7 @@ const BookingForm = forwardRef((props, ref) => {
                     <div className='flex justify-between'>
                         <label htmlFor="route">{getLabel("route")}</label>
                         {formData.duration && (
-                            <label htmlFor="route">{getLabel("duration")}: {formData.duration} H</label>
+                            <label htmlFor="route">{getLabel("duration")}: {formData.duration} Min</label>
                         )}
                     </div>
                     <select className={classes} name="route" id="route" value={formData.route} onChange={handleRouteChange}>
@@ -353,9 +359,21 @@ const BookingForm = forwardRef((props, ref) => {
                 </div>
 
                 <div className="bg-b rounded-md flex flex-col px-3 py-1 mb-5">
-                    <label className='pt-1 mb-1' htmlFor="passengers">{getLabel("passengers")}</label>
+                    <div className='flex justify-between items-center pt-1 mb-1'>
+                        <label htmlFor="passengers">
+                            {getLabel("passengers")}
+                        </label>
+                        <label htmlFor="passengers">
+                            {getLabel("minimumPassengers")}: {formData.minimumPassengers}
+                        </label>
+                    </div>
                     <div className={`flex items-center justify-between ${classes}`}>
-                        <button className="border rounded px-3 py-2" type="button" onClick={handleDecrement}>
+                        <button
+                            className="border rounded px-3 py-2"
+                            type="button"
+                            onClick={handleDecrement}
+                            disabled={formData.passengers <= formData.minimumPassengers}
+                        >
                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-dash" viewBox="0 0 16 16">
                                 <path d="M4 8a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7A.5.5 0 0 1 4 8" />
                             </svg>
@@ -364,14 +382,19 @@ const BookingForm = forwardRef((props, ref) => {
                             className="input-class"
                             id="passengers"
                             type="number"
-                            min="1"
+                            min={formData.minimumPassengers}
                             max="16"
                             readOnly
                             value={formData.passengers}
                             onChange={handlePassengerChange}
                             required
                         />
-                        <button className="border rounded px-3 py-2" type="button" onClick={handleIncrement}>
+                        <button
+                            className="border rounded px-3 py-2"
+                            type="button"
+                            onClick={handleIncrement}
+                            disabled={formData.passengers >= 16}
+                        >
                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-plus" viewBox="0 0 16 16">
                                 <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4" />
                             </svg>
@@ -392,37 +415,41 @@ const BookingForm = forwardRef((props, ref) => {
                     </div>
                 </div>
 
-                {!showReturn && (
-                    <button
-                        type="button"
-                        className="bg-white rounded-md flex justify-center items-center p-3 border-2 w-full mb-5 uppercase"
-                        onClick={() => setShowReturn(true)}
-                    >
-                        {getLabel("addReturn")}
-                    </button>
-                )}
-
-                {showReturn && (
-                    <div className="relative">
-                        <div className="grid grid-cols-1 md:grid-cols-2 gap-5 mb-5">
-                            <div className="bg-b rounded-md flex flex-col p-3">
-                                <label htmlFor="dateReturn">{getLabel("dateReturn")}</label>
-                                <input className={classes} id="dateReturn" type="date" min={formData.dateStart || today} value={formData.dateReturn} onChange={handleChange} />
-                                {errors.dateReturn && <ErrorMessage message={errors.dateReturn} />}
-                            </div>
-                            <div className="bg-b rounded-md flex flex-col p-3">
-                                <label htmlFor="timeReturn">{getLabel("timeReturn")}</label>
-                                <input className={classes} id="timeReturn" type="time" value={formData.timeReturn} onChange={handleChange} />
-                                {errors.timeReturn && <ErrorMessage message={errors.timeReturn} />}
-                            </div>
-                        </div>
-                        <button type="button" className="absolute -top-3 right-0 w-8 h-8 bg-gray-500 text-white rounded-full flex justify-center items-center" onClick={() => setShowReturn(false)}>
-                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-x-lg" viewBox="0 0 16 16">
-                                <path d="M2.146 2.854a.5.5 0 1 1 .708-.708L8 7.293l5.146-5.147a.5.5 0 0 1 .708.708L8.707 8l5.147 5.146a.5.5 0 0 1-.708.708L8 8.707l-5.146 5.147a.5.5 0 0 1-.708-.708L7.293 8z" />
-                            </svg>
+                {
+                    !showReturn && (
+                        <button
+                            type="button"
+                            className="bg-white rounded-md flex justify-center items-center p-3 border-2 w-full mb-5 uppercase"
+                            onClick={() => setShowReturn(true)}
+                        >
+                            {getLabel("addReturn")}
                         </button>
-                    </div>
-                )}
+                    )
+                }
+
+                {
+                    showReturn && (
+                        <div className="relative">
+                            <div className="grid grid-cols-1 md:grid-cols-2 gap-5 mb-5">
+                                <div className="bg-b rounded-md flex flex-col p-3">
+                                    <label htmlFor="dateReturn">{getLabel("dateReturn")}</label>
+                                    <input className={classes} id="dateReturn" type="date" min={formData.dateStart || today} value={formData.dateReturn} onChange={handleChange} />
+                                    {errors.dateReturn && <ErrorMessage message={errors.dateReturn} />}
+                                </div>
+                                <div className="bg-b rounded-md flex flex-col p-3">
+                                    <label htmlFor="timeReturn">{getLabel("timeReturn")}</label>
+                                    <input className={classes} id="timeReturn" type="time" value={formData.timeReturn} onChange={handleChange} />
+                                    {errors.timeReturn && <ErrorMessage message={errors.timeReturn} />}
+                                </div>
+                            </div>
+                            <button type="button" className="absolute -top-3 right-0 w-8 h-8 bg-gray-500 text-white rounded-full flex justify-center items-center" onClick={() => setShowReturn(false)}>
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-x-lg" viewBox="0 0 16 16">
+                                    <path d="M2.146 2.854a.5.5 0 1 1 .708-.708L8 7.293l5.146-5.147a.5.5 0 0 1 .708.708L8.707 8l5.147 5.146a.5.5 0 0 1-.708.708L8 8.707l-5.146 5.147a.5.5 0 0 1-.708-.708L7.293 8z" />
+                                </svg>
+                            </button>
+                        </div>
+                    )
+                }
 
                 <div className="bg-b rounded-md flex flex-col p-3 mb-5">
                     <label htmlFor="message">{getLabel("notes")}</label>
@@ -446,10 +473,12 @@ const BookingForm = forwardRef((props, ref) => {
                     </label>
                 </div>
 
-                {!showPayment && (
-                    <button type="submit" className="bg-c text-white rounded-md flex justify-center items-center p-3 w-full uppercase">{getLabel("goToPayment")}</button>
-                )}
-            </form>
+                {
+                    !showPayment && (
+                        <button type="submit" className="bg-c text-white rounded-md flex justify-center items-center p-3 w-full uppercase">{getLabel("goToPayment")}</button>
+                    )
+                }
+            </form >
 
             {paymentStatus === 'COMPLETED' ? (
                 <></>
@@ -482,23 +511,25 @@ const BookingForm = forwardRef((props, ref) => {
                 )
             )}
 
-            {paymentStatus && (
-                <div className="bg-b rounded-md flex flex-col p-3">
-                    {paymentStatus === 'COMPLETED' ? (
-                        <div className="text-green-600">
-                            <h2>{getLabel("payment")}</h2>
-                            <p>{getLabel("thankYouBooking")}</p>
-                        </div>
-                    ) : (
-                        <div className="text-red-600">
-                            <h2>{getLabel("paymentError")}</h2>
-                            <p>{getLabel("paymentErrorDescription")}</p>
-                        </div>
-                    )}
-                    <button type="button" className="bg-c text-white rounded-md flex justify-center items-center p-3 w-full mt-5" onClick={() => window.location.reload()}>{getLabel("backHome")}</button>
-                </div>
-            )}
-        </div>
+            {
+                paymentStatus && (
+                    <div className="bg-b rounded-md flex flex-col p-3">
+                        {paymentStatus === 'COMPLETED' ? (
+                            <div className="text-green-600">
+                                <h2>{getLabel("payment")}</h2>
+                                <p>{getLabel("thankYouBooking")}</p>
+                            </div>
+                        ) : (
+                            <div className="text-red-600">
+                                <h2>{getLabel("paymentError")}</h2>
+                                <p>{getLabel("paymentErrorDescription")}</p>
+                            </div>
+                        )}
+                        <button type="button" className="bg-c text-white rounded-md flex justify-center items-center p-3 w-full mt-5" onClick={() => window.location.reload()}>{getLabel("backHome")}</button>
+                    </div>
+                )
+            }
+        </div >
     );
 });
 

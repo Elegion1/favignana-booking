@@ -9,12 +9,6 @@ export default function Footer() {
             body: "",
         },
         {
-            image: "./whatsapp.png",
-            class: "text-xl",
-            title: `${getLabel("whatsapp")}:`,
-            body: "0123456789",
-        },
-        {
             image: "./email.png",
             class: "text-xl",
             title: `${getLabel("email")}:`,
@@ -25,11 +19,14 @@ export default function Footer() {
     return (
         <>
             <div id="footer" className="bg-b py-5">
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-10 p-10">
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-10 p-10">
                     <div className="flex flex-col justify-center md:items-start items-center">
                         <h5 className="text-2xl uppercase mb-3">{getLabel("footerTitle")}</h5>
                         <p>{getLabel("footerBody")}</p>
                         <a className="mt-10 text-c" href="/terms-and-conditions">{getLabel("termsConditions")}</a>
+                    </div>
+                    <div className="flex justify-center items-center">
+                        <img className="w-[200px]" src="./logo-color.png" alt="" />
                     </div>
                     <div className="flex flex-col justify-center items-start mx-auto">
                         {contacts.map((contact, index) => (

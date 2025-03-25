@@ -32,9 +32,10 @@ export default function Transfer() {
         <>
             <div id="transferInfo" className="p-10">
                 <h2 className="text-4xl text-center mb-5">{getLabel("transferTitle")}</h2>
-                <p className="md:px-30 text-justify">
+                <p className="md:px-30 text-justify mb-5">
                     {getLabel("transferDescription")}
                 </p>
+                <h6 className="text-xl text-center mt-5 uppercase">{getLabel("discountPolicy")}</h6>
             </div>
 
             <div id="space" style={{ height: bookingFormHeight - 1000 }}></div>

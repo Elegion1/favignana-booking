@@ -1,10 +1,12 @@
 @import "tailwindcss";
 
 :root {
-  --color-a: #eaeaea;
-  --color-b: #e2e2e2;
-  --color-c: #53889a;
-  --color-d: #6DAFC5;
+  --color-a: #ffffff; /* Bianco */
+  --color-b: #d1e5ec; /* Azzurro molto chiaro (sfondo) */
+  --color-c: #40d9ff; /* Azzurro brillante (colore principale del logo) */
+  --color-d: #7be5ff; /* Azzurro chiaro (hover, dettagli) */
+  --color-e: #ff8c40; /* Arancione acceso (colore secondario per contrasto) */
+  --color-f: #1b4b5a; /* Blu petrolio scuro (sfondi scuri, contrasto con testo bianco) */
 }
 
 *:not([class]) {
@@ -12,7 +14,7 @@
 }
 
 .text-a {
-  color: var(--color-a) !important; 
+  color: var(--color-a) !important;
 }
 
 .text-b {
@@ -25,6 +27,14 @@
 
 .text-d {
   color: var(--color-d) !important;
+}
+
+.text-e {
+  color: var(--color-e) !important;
+}
+
+.text-f {
+  color: var(--color-f) !important;
 }
 
 .bg-a {
@@ -41,4 +51,12 @@
 
 .bg-d {
   background-color: var(--color-d) !important;
+}
+
+.bg-e {
+  background-color: var(--color-e) !important;
+}
+
+.bg-f {
+  background-color: var(--color-f) !important;
 }
