@@ -45,15 +45,33 @@ export default function Home() {
 
             <div id="space" style={{ height: infoHeight - 100 }}></div>
 
-            <div id="callToAction" className="relative">
-                <div id="floater" className="absolute bg-a p-8 shadow-2xl">
-                    <p className="mb-4">{getLabel("CTAAbstract")}</p>
+            <div id="callToAction" className="relative h-[120vh] md:h-[80vh]">
+
+                <div id="floater" className="md:absolute bg-a p-8 shadow-2xl">
+
+                    <p className="mb-2">{getLabel("CTAAbstract")}</p>
                     <h2 className="text-2xl mb-3">{getLabel("CTATitle")}</h2>
-                    <p className="mb-6">{getLabel("CTABody")}</p>
-                    <a className="bg-c p-4 uppercase text-a" href="/transfer">
+                    <p className="mb-4">{getLabel("CTABody")}</p>
+
+                    <a className="inline-block bg-c p-4 uppercase text-a" href="/transfer">
                         {getLabel("CTAButton")}
                     </a>
+
                 </div>
+
+                <div id="floater2" className="md:absolute bg-a p-8 shadow-2xl">
+
+                    <p className="mb-2">{getLabel("CTAAbstract2")}</p>
+                    <h2 className="text-2xl mb-3">{getLabel("CTATitle2")}</h2>
+                    <p className="mb-4">{getLabel("CTABody2")}</p>
+
+                    <a className="inline-block bg-c p-4 uppercase text-a" href="/excursion">
+                        {getLabel("CTAButton2")}
+                    </a>
+
+                </div>
+
+
             </div>
 
             <div id="description" className="w-full grid grid-cols-1 md:grid-cols-2">

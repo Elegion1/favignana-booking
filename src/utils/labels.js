@@ -1,5 +1,5 @@
 export const getLabel = (id) => {
-  return labels.it[id] || "";
+  return labels.it[id] || "No label found";
 };
 
 export const labels = {
@@ -15,17 +15,28 @@ export const labels = {
     timeReturn: "Orario Ritorno",
     notes: "Note",
     passengers: "Passeggeri",
-    minimumPassengers: "Numero minimo di passeggeri",
+    minimumPassengers: "Minimo passeggeri",
     duration: "Durata",
     addReturn: "Aggiungi Ritorno",
     messagePlaceholder: "Inserisci qui eventuali richieste speciali",
     goToPayment: "Vai al pagamento",
+    payment: "Pagamento",
     back: "Indietro",
+    next: "Avanti",
+    selectTransferType: "Seleziona il tipo di transfer",
+    collective: "Collettivo",
+    individual: "Individuale",
     backHome: "Torna alla Home",
     loading: "Caricamento...",
     selectRoute: "Seleziona la tratta",
     price: "Prezzo",
     message: "Messaggio",
+    flightInfoTitle: "Informazioni sul volo",
+    flightInfoBody:
+      "Indica il numero del volo e l'orario di partenza per facilitare il nostro servizio.",
+    customerInfoTitle: "Informazioni sul cliente",
+    customerInfoBody:
+      "Inserisci i tuoi dati per la prenotazione e per eventuali comunicazioni.",
     paymentCompleted: "Pagamento completato con successo!",
     thankYouBooking:
       "Grazie per la tua prenotazione! Riceverai una conferma via email.",
@@ -45,9 +56,14 @@ export const labels = {
     shipInfoTitle: "Scopri Favignana",
     shipInfoBody:
       "Dalle acque cristalline alle incantevoli calette, dai sentieri panoramici alle tradizioni locali, scopri un angolo di paradiso che ti aspetta.",
+    excursionInfoTitle: "Escursioni alle Saline di Nubia",
+    excursionInfoBody:
+      "Scopri le meraviglie delle Saline di Nubia, un luogo incantevole dove la natura e la cultura si incontrano.",
     home: "Home",
     transfer: "Transfer",
     contactUs: "Contattaci",
+    excursion: "Escursioni",
+    bookingSummary: "Riepilogo prenotazione",
     contactUsTitle: "Contattaci per maggiori informazioni",
     contactUsDescription:
       "Se hai domande o vuoi assistenza con la prenotazione, siamo qui per aiutarti.",
@@ -65,17 +81,36 @@ export const labels = {
     CTABody:
       "Raggiungi il porto senza stress con il nostro servizio transfer. Scegli il punto di partenza e prenota in pochi clic",
     CTAButton: "Prenota ora",
+    CTAAbstract2: "ESCURSIONI SALINE DI NUBIA",
+    CTATitle2: "Prenota la tua escursione",
+    CTABody2:
+      "Scopri le meraviglie delle Saline di Nubia, un luogo dove la natura e la cultura si incontrano, scegli un punto di partenza e prenota in pochi clic",
+    CTAButton2: "Prenota ora",
     descTitle: "Transfer per Favignana",
     descBody:
       "Servizio transfer da e per gli aeroporti di Trapani e Palermo, con arrivo diretto al porto di Trapani per l'imbarco verso Favignana",
     homeMasterTitle: "Favignana Transfer",
     transferMasterTitle: "Prenota il tuo transfer",
     contactMasterTitle: "Contattaci",
+    excursionMasterTitle: "Escursioni",
     transferDescription:
       "Favignana Transfer offre un servizio di bus navetta condiviso per raggiungere comodamente l’isola di Favignana.\n È la soluzione più conveniente e pratica per spostarsi dall’aeroporto di Trapani al porto, punto di partenza per le Isole Egadi, in soli 25 minuti. Il tragitto verso Trapani si snoda lungo la suggestiva strada delle saline, offrendo panorami mozzafiato.\n All’arrivo in aeroporto, il nostro autista ti aspetterà con un cartello riportante il logo dell'azienda 'MG Transfer'.\n Indicare nel campo NOTE del modulo di prenotazione l'orario di atterraggio del volo, il numero del volo e se sono necessari seggiolini per bambini.\n I nostri veicoli sono regolarmente autorizzati e il servizio è garantito da taxi ufficiali o auto a noleggio con conducente. Per chi desidera un’esperienza ancora più esclusiva, mettiamo a disposizione anche vetture di lusso.\n Siamo un’azienda locale con profonda conoscenza del territorio, pronti a rispondere a ogni tua curiosità sulla provincia di Trapani. La nostra priorità è offrirti viaggi sicuri, comodi e trasparenti.\n Se possiedi un conto PayPal, puoi pagare il servizio in tre rate senza interessi. Per ulteriori dettagli, visita il sito di PayPal. Le tariffe, le promozioni e gli sconti sono soggetti a disponibilità e possono variare in base alla stagione.\n Contattaci per ricevere maggiori informazioni o per prenotare il tuo transfer!\n I tempi di attesa possono variare in base agli orari dei voli e al raggiungimento del numero dei passeggeri.\n Se prenoti la tratta andata e ritorno avrai uno sconto del 10%.\n Il servizio non è rimborsabile in caso di annullamento.",
-    discountPolicy: "Se prenoti la tratta andata e ritorno avrai uno sconto del 10%",
+    discountPolicy:
+      "Se prenoti la tratta andata e ritorno avrai uno sconto del 10%",
     termsConditions: "Termini e condizioni",
     iAccept: "Accetto i",
+    flightNumber: "Numero volo",
+    departureAirport: "Aeroporto di partenza",
+    departureTime: "Orario di partenza",
+    arrivalAirport: "Aeroporto di arrivo",
+    arrivalTime: "Orario di arrivo",
+    transferType: "Tipo transfer",
+    oneWay: "Sola andata",
+    roundTrip: "Andata e ritorno",
+    time: "ore",
+    excursionDepartureLocation: "Luogo di partenza",
+    selectExcursion: "Seleziona escursione",
+    selectLocation: "Seleziona partenza",
   },
   en: {
     name: "Name",

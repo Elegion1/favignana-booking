@@ -8,6 +8,7 @@ import Home from './pages/Home';
 import Transfer from './pages/Transfer';
 import Contact from './pages/Contact';
 import TermsAndConditions from "./pages/TermsAndConditions";
+import Excursion from "./pages/Excursion";
 
 function RedirectHandler() {
   const navigate = useNavigate();
@@ -34,6 +35,7 @@ function App() {
           <Route path="/transfer" element={<Transfer />} />
           <Route path="/contact" element={<Contact />} />
           <Route path="/terms-and-conditions" element={<TermsAndConditions />} />
+          <Route path="/excursion" element={<Excursion />} />
         </Route>
       </Routes>
     </BrowserRouter>

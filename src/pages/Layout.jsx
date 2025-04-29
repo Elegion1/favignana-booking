@@ -12,6 +12,7 @@ export default function Layout() {
         '/transfer': getLabel("transferMasterTitle"),
         '/contact': getLabel("contactMasterTitle"),
         '/terms-and-conditions': getLabel("termsConditions"),
+        '/excursion': getLabel("excursionMasterTitle"),
     };
 
     const title = mastTitles[location.pathname] || 'Page Not Found';

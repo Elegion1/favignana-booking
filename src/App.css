@@ -2,8 +2,13 @@
   height: 100px;
 }
 
-p, span {
+p,
+span {
   white-space: pre-line;
+}
+
+button {
+  touch-action: manipulation;
 }
 
 button:hover {
@@ -11,9 +16,19 @@ button:hover {
   transition: 0.3s;
 }
 
+button:active {
+  transform: scale(0.95);
+  transition: 0.3s;
+}
+
 a:hover {
- filter: brightness(1.1); 
- transition: 0.3s;
+  filter: brightness(1.1);
+  transition: 0.3s;
+}
+
+input,
+select:focus {
+  outline: none;
 }
 
 #masthead {
@@ -37,7 +52,6 @@ a:hover {
 
 #callToAction {
   background-image: url("../public/image2.png");
-  height: 80vh;
   background-size: cover; /* Copre l'intera area */
   background-position: center; /* Centra l'immagine */
   background-repeat: no-repeat; /* Evita la ripetizione */
@@ -45,10 +59,18 @@ a:hover {
 
 #floater {
   position: absolute;
-  top: 10%;
+  top: 5%;
   left: 50%;
   transform: translateX(-50%);
-  width: 80vw; /* Maggiore larghezza su schermi piccoli */
+  width: 90vw; /* Maggiore larghezza su schermi piccoli */
+}
+
+#floater2 {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 90vw; /* Maggiore larghezza su schermi piccoli */
 }
 
 #descImg {
@@ -60,7 +82,7 @@ a:hover {
 
 #transferForm {
   background-image: url("../public/image4.png");
-  background-size: contain; /* Copre l'intera area */
+  background-size: cover; /* Copre l'intera area */
   background-position: bottom; /* Centra l'immagine */
   background-repeat: no-repeat; /* Evita la ripetizione */
 }
@@ -72,9 +94,21 @@ a:hover {
   background-repeat: no-repeat;
 }
 
+#excursionForm {
+  background-image: url("../public/museo-del-sale.jpeg");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
 @media screen and (min-width: 768px) {
   #floater {
     left: 3%;
+    transform: none; /* Rimuove la centratura */
+    width: 45vw;
+  }
+  #floater2 {
+    right: 3%;
     transform: none; /* Rimuove la centratura */
     width: 45vw;
   }
