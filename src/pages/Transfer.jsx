@@ -34,7 +34,7 @@ export default function Transfer() {
                 <p className="md:px-30 text-justify mb-5">
                     {getLabel("transferDescription")}
                 </p>
-                <h6 className="text-xl text-center mt-5 uppercase text-e">{getLabel("discountPolicy")}</h6>
+                <h6 className="text-3xl text-center mt-5 uppercase text-e">{getLabel("discountPolicy")}</h6>
             </div>
 
             <div id="transferForm"

@@ -12,7 +12,7 @@ const TransferBookingForm = forwardRef((props, ref) => {
     const [showPayment, setShowPayment] = useState(false);
     const [paymentStatus, setPaymentStatus] = useState('');
     const [dataToSubmit, setDataToSubmit] = useState(null);
-    const [transferType, setTransferType] = useState('collective');
+    const [transferType, setTransferType] = useState('individual');
     const [step, setStep] = useState(1);
 
     const [formData, setFormData] = useState({
@@ -58,10 +58,10 @@ const TransferBookingForm = forwardRef((props, ref) => {
             arrival: "Trapani Porto",
             collective: {
                 price: 10,
-                minimumPassengers: 3,
+                minimumPassengers: 1,
             },
             individual: {
-                price: 30,
+                price: 25,
                 priceIncrement: 5,
                 minimumPassengers: 1,
             },
@@ -73,7 +73,7 @@ const TransferBookingForm = forwardRef((props, ref) => {
             arrival: "Trapani Porto",
             collective: {
                 price: 25,
-                minimumPassengers: 4,
+                minimumPassengers: 1,
             },
             individual: {
                 price: 100,
@@ -91,9 +91,9 @@ const TransferBookingForm = forwardRef((props, ref) => {
                 minimumPassengers: 3,
             },
             individual: {
-                price: 30,
+                price: 25,
                 priceIncrement: 5,
-                minimumPassengers: 1,
+                minimumPassengers: 3,
             },
             duration: 30,
         },
@@ -260,8 +260,8 @@ const TransferBookingForm = forwardRef((props, ref) => {
                 console.log('Calculating price for:', p);
                 console.log('Base Price:', basePrice);
                 console.log('Price Increment:', priceIncrement);
-                if (p <= 4) return basePrice;
-                return basePrice + (priceIncrement * (p - 4));
+                if (p <= 3) return basePrice;
+                return basePrice + (priceIncrement * (p - 3));
             };
 
             // Prezzo per i veicoli pieni
@@ -346,25 +346,28 @@ const TransferBookingForm = forwardRef((props, ref) => {
 
                 {step === 1 && (
                     <>
-                        <p className='text-center text-xl mb-3 uppercase'>{getLabel('selectTransferType')}</p>
-                        <div className='flex items-center justify-center mb-5'>
-                            <button
-                                className={`p-2 rounded-xl uppercase me-5 ${transferType === 'collective' ? 'bg-c text-white' : 'bg-b text-black'}`}
-                                type='button'
-                                onClick={() => handleTransferTypeChange('collective')}
-                            >
-                                {getLabel('collective')}
-                            </button>
+                        {/* <div>
+                            <p className='text-center text-xl mb-3 uppercase'>{getLabel('selectTransferType')}</p>
+                            <div className='flex items-center justify-center mb-5'>
+                                <button
+                                    className={`p-2 rounded-xl uppercase me-5 ${transferType === 'collective' ? 'bg-c text-white' : 'bg-b text-black'}`}
+                                    type='button'
+                                    onClick={() => handleTransferTypeChange('collective')}
+                                >
+                                    {getLabel('collective')}
+                                </button>
 
-                            <button
-                                className={`p-2 rounded-xl uppercase ${transferType === 'individual' ? 'bg-c text-white' : 'bg-b text-black'}`}
-                                type='button'
-                                onClick={() => handleTransferTypeChange('individual')}
-                            >
-                                {getLabel('individual')}
-                            </button>
-                        </div>
+                                <button
+                                    className={`p-2 rounded-xl uppercase ${transferType === 'individual' ? 'bg-c text-white' : 'bg-b text-black'}`}
+                                    type='button'
+                                    onClick={() => handleTransferTypeChange('individual')}
+                                >
+                                    {getLabel('individual')}
+                                </button>
+                            </div>
+                        </div> */}
 
+                        <p className='text-center text-xl mb-3 uppercase'>Prenota transfer</p>
                         <div className="bg-b rounded-md flex flex-col p-3 mb-5">
                             <div className='flex justify-between'>
                                 <label htmlFor="route">{getLabel("route")}</label>
@@ -590,7 +593,7 @@ const TransferBookingForm = forwardRef((props, ref) => {
                                             <p><strong>{getLabel("arrivalAirport")}:</strong> <br />{formData.arrivalAirport} <strong>{getLabel("time")}</strong>: {formData.arrivalTime}</p>
                                         </div>
                                         <div>
-                                            <p><strong>{getLabel("transferType")}:</strong> {getLabel(transferType)}</p>
+                                            {/* <p><strong>{getLabel("transferType")}:</strong> {getLabel(transferType)}</p> */}
                                             <p><strong>{getLabel("route")}: <br /></strong> {formData.route}</p>
                                             <p>
                                                 <strong>
