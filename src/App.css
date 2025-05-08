@@ -101,6 +101,11 @@ select:focus {
   background-repeat: no-repeat;
 }
 
+#formTop {
+  max-width: 750px;
+  margin: 0 auto;
+}
+
 @media screen and (min-width: 768px) {
   #floater {
     left: 3%;
