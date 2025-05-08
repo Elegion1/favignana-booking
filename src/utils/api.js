@@ -34,7 +34,7 @@ const generateBookingCode = async () => {
 function generateAndDownloadPDF(details) {
   const doc = new jsPDF();
   doc.setFontSize(20);
-  doc.text("Dettagli Prenotazione", 20, 20);
+  doc.text("Dettagli Prenotazione MG Transfer", 20, 20);
 
   doc.setFontSize(12);
   doc.text(`Codice Prenotazione: ${details.code}`, 20, 30);
@@ -43,40 +43,77 @@ function generateAndDownloadPDF(details) {
   doc.text(`Telefono: ${details.phone}`, 20, 60);
   doc.text(`Note: ${details.message}`, 20, 65);
 
-  if (details.type == "transfer") {
-    doc.text(`Tratta: ${details.route}`, 20, 70);
+  let currentY = 75;
+
+  if (details.type === "transfer") {
+    doc.text(`Tratta: ${details.route}`, 20, currentY);
+    currentY += 10;
     doc.text(
       `Data Partenza: ${details.dateStart} alle ${details.timeStart}`,
       20,
-      80
+      currentY
     );
+    currentY += 10;
 
     if (details.dateReturn && details.timeReturn) {
       doc.text(
         `Data Ritorno: ${details.dateReturn} alle ${details.timeReturn}`,
         20,
-        90
+        currentY
       );
+      currentY += 10;
     }
-
-  } else if (details.type == "escursione") {
-
-    doc.text(`Escursione a: ${details.excursion}`, 20, 70);
-    doc.text(`Luogo di partenza: ${departureLocation}`, 20, 75);
+  } else if (details.type === "escursione") {
+    doc.text(`Escursione a: ${details.excursion}`, 20, currentY);
+    currentY += 10;
+    doc.text(`Luogo di partenza: ${details.departureLocation}`, 20, currentY);
+    currentY += 10;
     doc.text(
       `Data Partenza: ${details.dateStart} alle ${details.timeStart}`,
       20,
-      80
+      currentY
     );
+    currentY += 10;
   }
 
-  doc.text(`Passeggeri: ${details.passengers}`, 20, 100);
-  doc.text(`Prezzo: ${details.price}€`, 20, 110);
+  // Dati volo
+  if (
+    details.flightNumber ||
+    details.departureAirport ||
+    details.arrivalAirport
+  ) {
+    doc.text("Dati volo:", 20, currentY);
+    currentY += 10;
+
+    if (details.flightNumber) {
+      doc.text(`Numero Volo: ${details.flightNumber}`, 20, currentY);
+      currentY += 10;
+    }
+    if (details.departureAirport && details.departureTime) {
+      doc.text(
+        `Aeroporto di partenza: ${details.departureAirport} ore: ${details.departureTime}`,
+        20,
+        currentY
+      );
+      currentY += 10;
+    }
+    if (details.arrivalAirport && details.arrivalTime) {
+      doc.text(
+        `Aeroporto di arrivo: ${details.arrivalAirport} ore: ${details.arrivalTime}`,
+        20,
+        currentY
+      );
+      currentY += 10;
+    }
+  }
+
+  currentY += 10;
+  doc.text(`Passeggeri: ${details.passengers}`, 20, currentY);
+  currentY += 10;
+  doc.text(`Prezzo: ${details.price}€`, 20, currentY);
 
   console.log("Generating PDF:", details);
-
-  // Scarica il PDF
-  doc.save(`Prenotazione-${details.code}.pdf`);
+  doc.save(`Prenotazione-${details.type}-${details.code}.pdf`);
 }
 
 // Funzione per inviare l'email
@@ -84,6 +121,10 @@ function sendBookingEmail(details) {
   emailjs.init(emailJSPublicKey);
   const serviceID = emailJSServiceID;
   const templateID = "template_ztva4m8";
+
+  // Inietto l'HTML dinamico
+  details.bookingData = generateBookingHtml(details);
+
   console.log("Sto inviando la mail", details);
   emailjs
     .send(serviceID, templateID, details)
@@ -94,6 +135,38 @@ function sendBookingEmail(details) {
     .catch((error) => {
       console.error("Errore nell'invio dell'email:", error);
     });
+}
+
+function generateBookingHtml(details) {
+  const data = details;
+  const type = data.type;
+
+  let html = `<p>Tipo: ${type}</p>`;
+
+  if (type === "transfer") {
+    html += `
+      <p><strong>Tratta:</strong> ${data.route}</p>
+      <p><strong>Andata:</strong> ${data.dateStart} <strong>ore:</strong> ${data.timeStart}</p>
+      <p><strong>Ritorno:</strong> ${data.dateReturn} <strong>ore:</strong> ${data.timeReturn}</p>
+      <p><strong>Durata:</strong> ${data.duration} minuti (circa)</p>
+    `;
+  } else if (type === "escursione") {
+    html += `
+      <p><strong>Escursione a:</strong> ${data.excursion} <strong>Partenza da:</strong> ${data.departureLocation}</p>
+      <p><strong>Data:</strong> ${data.dateStart} <strong>ore:</strong> ${data.timeStart}</p>
+      <p><strong>Durata:</strong> ${data.duration} ore (circa)</p>
+    `;
+  }
+
+  if (data.flightNumber) {
+    html += `
+      <p><strong>Numero Volo:</strong> ${data.flightNumber}</p>
+      <p><strong>Aeroporto di partenza:</strong> ${data.departureAirport} <strong>ore:</strong> ${data.departureTime}</p>
+      <p><strong>Aeroporto di arrivo:</strong> ${data.arrivalAirport} <strong>ore:</strong> ${data.arrivalTime}</p>
+    `;
+  }
+
+  return html;
 }
 
 function encryptData(bookingData, secretKey) {
@@ -129,7 +202,7 @@ function sendEncryptedBookingData(bookingData) {
     .catch((error) => console.error("Error:", error));
 }
 
-async function testBookingFlow () {
+async function testBookingFlow() {
   console.log("Simulazione del flusso di prenotazione...");
 
   // Genera un codice di prenotazione
@@ -137,11 +210,11 @@ async function testBookingFlow () {
 
   // Crea i dettagli della prenotazione simulati
   const bookingDetails = {
-      ...formData,
+    ...formData,
 
-      code: bookingCode,
-      paymentID: "TEST_PAYMENT_ID",
-      paymentStatus: "COMPLETED",
+    code: bookingCode,
+    paymentID: "TEST_PAYMENT_ID",
+    paymentStatus: "COMPLETED",
   };
 
   console.log("Dettagli della prenotazione simulati:", bookingDetails);
@@ -153,13 +226,12 @@ async function testBookingFlow () {
 
   alert("Flusso di prenotazione completato con successo (simulazione).");
   generateAndDownloadPDF(bookingDetails);
-};
-
+}
 
 export {
   generateBookingCode,
   sendEncryptedBookingData,
   sendBookingEmail,
   generateAndDownloadPDF,
-  testBookingFlow
+  testBookingFlow,
 };

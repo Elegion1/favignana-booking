@@ -1,5 +1,6 @@
 import ExcursionBookingForm from "../components/ExcurisonBookingForm";
 import { PayPalScriptProvider } from "@paypal/react-paypal-js";
+import { getLabel } from "../utils/labels";
 
 export default function Excursion() {
     const clientID = import.meta.env.VITE_PAYPAL_CLIENT_ID;
@@ -11,8 +12,8 @@ export default function Excursion() {
     return (
         <>
             <div id="excursionInfo" className="p-10">
-                <p>
-                    Vivi un’esperienza unica alla scoperta delle suggestive Saline di Nubia, tra tramonti mozzafiato, natura incontaminata e tradizione siciliana. Prenota la tua escursione scegliendo il punto di partenza più comodo per te: ci occupiamo noi del resto. Lasciati incantare da un paesaggio senza tempo!
+                <p className="md:px-30 text-justify">
+                    {getLabel('excursionDescription')}
                 </p>
             </div>
 

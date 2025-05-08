@@ -1,5 +1,5 @@
 export const getLabel = (id) => {
-  return labels.it[id] || "No label found";
+  return labels.it[id] || id;
 };
 
 export const labels = {
@@ -59,6 +59,9 @@ export const labels = {
     excursionInfoTitle: "Escursioni alle Saline di Nubia",
     excursionInfoBody:
       "Scopri le meraviglie delle Saline di Nubia, un luogo incantevole dove la natura e la cultura si incontrano.",
+    PDFMessage:
+      "Il PDF con il riepilogo della prenotazione verrà scaricato automaticamente, clicca sul pulsante qui sotto se non viene scaricato",
+    downloadPDF: "Clicca qui per scaricare il PDF",
     home: "Home",
     transfer: "Transfer",
     contactUs: "Contattaci",
@@ -94,11 +97,14 @@ export const labels = {
     contactMasterTitle: "Contattaci",
     excursionMasterTitle: "Escursioni",
     transferDescription:
-      "Favignana Transfer offre un servizio di bus navetta condiviso per raggiungere comodamente l’isola di Favignana.\n È la soluzione più conveniente e pratica per spostarsi dall’aeroporto di Trapani al porto, punto di partenza per le Isole Egadi, in soli 25 minuti. Il tragitto verso Trapani si snoda lungo la suggestiva strada delle saline, offrendo panorami mozzafiato.\n All’arrivo in aeroporto, il nostro autista ti aspetterà con un cartello riportante il logo dell'azienda 'MG Transfer'.\n Indicare nel campo NOTE del modulo di prenotazione l'orario di atterraggio del volo, il numero del volo e se sono necessari seggiolini per bambini.\n I nostri veicoli sono regolarmente autorizzati e il servizio è garantito da taxi ufficiali o auto a noleggio con conducente. Per chi desidera un’esperienza ancora più esclusiva, mettiamo a disposizione anche vetture di lusso.\n Siamo un’azienda locale con profonda conoscenza del territorio, pronti a rispondere a ogni tua curiosità sulla provincia di Trapani. La nostra priorità è offrirti viaggi sicuri, comodi e trasparenti.\n Se possiedi un conto PayPal, puoi pagare il servizio in tre rate senza interessi. Per ulteriori dettagli, visita il sito di PayPal. Le tariffe, le promozioni e gli sconti sono soggetti a disponibilità e possono variare in base alla stagione.\n Contattaci per ricevere maggiori informazioni o per prenotare il tuo transfer!\n A bordo dei van è possibile che siano presenti altri passeggeri dato che il transfer è di tipo collettivo. \n Se prenoti la tratta andata e ritorno avrai uno sconto del 10%.\n Il servizio non è rimborsabile in caso di annullamento.",
+      "Favignana Transfer offre un servizio di bus navetta condiviso per raggiungere comodamente l’isola di Favignana.\n È la soluzione più conveniente e pratica per spostarsi dall’aeroporto di Trapani al porto, punto di partenza per le Isole Egadi, in soli 25 minuti. Il tragitto verso Trapani si snoda lungo la suggestiva strada delle saline, offrendo panorami mozzafiato.\n All’arrivo in aeroporto, il nostro autista ti aspetterà con un cartello riportante il logo dell'azienda 'MG Transfer'.\n Indicare nel campo apposito del modulo di prenotazione l'orario di atterraggio del volo, il numero del volo e se sono necessari seggiolini per bambini.\n I nostri veicoli sono regolarmente autorizzati e il servizio è garantito da taxi ufficiali o auto a noleggio con conducente. Per chi desidera un’esperienza ancora più esclusiva, mettiamo a disposizione anche vetture di lusso.\n Siamo un’azienda locale con profonda conoscenza del territorio, pronti a rispondere a ogni tua curiosità sulla provincia di Trapani. La nostra priorità è offrirti viaggi sicuri, comodi e trasparenti.\n Se possiedi un conto PayPal, puoi pagare il servizio in tre rate senza interessi. Per ulteriori dettagli, visita il sito di PayPal. Le tariffe, le promozioni e gli sconti sono soggetti a disponibilità e possono variare in base alla stagione.\n Contattaci per ricevere maggiori informazioni o per prenotare il tuo transfer!\n A bordo dei van è possibile che siano presenti altri passeggeri dato che il transfer è di tipo collettivo. \n Se prenoti la tratta andata e ritorno avrai uno sconto del 10%.\n Il servizio non è rimborsabile in caso di annullamento.",
+    excursionDescription:
+      "Scopri le Saline di Trapani: un viaggio tra natura, storia e magia del sale, parti da Trapani per un’esperienza indimenticabile tra le suggestive Saline di Nubia e le affascinanti Saline Mamma Caura.\nLasciati incantare da paesaggi unici, mulini a vento, specchi d’acqua rosa e montagne di sale che raccontano secoli di tradizione.\nDurante l’escursione potrai conoscere da vicino l’antica lavorazione del sale, osservare la fauna tipica delle zone umide e goderti panorami mozzafiato, soprattutto al tramonto.\nIl nostro servizio di escursioni parte comodamente da Trapani, con veicoli autorizzati e autisti esperti del territorio.\nTi accompagneremo lungo la famosa strada delle saline, rendendo ogni tratto del percorso parte integrante dell’esperienza.\nIl nostro staff sarà a disposizione per raccontarti curiosità e aneddoti legati a questo affascinante angolo di Sicilia.\n Indicare, se necessario, nel campo apposito del modulo di prenotazione l'orario di atterraggio del volo, il numero del volo e se sono necessari seggiolini per bambini.\n Siamo un’azienda locale con profonda conoscenza del territorio, pronti a rispondere a ogni tua curiosità sulla provincia di Trapani. La nostra priorità è offrirti viaggi sicuri, comodi e trasparenti.\n Se possiedi un conto PayPal, puoi pagare il servizio in tre rate senza interessi. Per ulteriori dettagli, visita il sito di PayPal.\nLe tariffe, le promozioni e gli sconti sono soggetti a disponibilità e possono variare in base alla stagione.\n Contattaci per ricevere maggiori informazioni\nIl servizio non è rimborsabile in caso di annullamento.",
     discountPolicy:
       "Se prenoti la tratta andata e ritorno avrai uno sconto del 10%",
     termsConditions: "Termini e condizioni",
     iAccept: "Accetto i",
+    noNotes: "NESSUNA NOTA",
     flightNumber: "Numero volo",
     departureAirport: "Aeroporto di partenza",
     departureTime: "Orario di partenza",

@@ -2,16 +2,77 @@ import { useState, useMemo, useRef, forwardRef } from 'react';
 import { getLabel } from '../utils/labels';
 import ErrorMessage from './ErrorMessage';
 import { PayPalButtons, usePayPalScriptReducer } from "@paypal/react-paypal-js";
-import { generateBookingCode, sendEncryptedBookingData, sendBookingEmail, generateAndDownloadPDF, testBookingFlow } from '../utils/api';
+import { generateBookingCode, sendEncryptedBookingData, sendBookingEmail, generateAndDownloadPDF } from '../utils/api';
 
 const ExcursionBookingForm = forwardRef((props, ref) => {
     const excursionBookingFormRef = ref || useRef(null);
-
     const [showPayment, setShowPayment] = useState(false);
+    const [showButtonsOnSumbit, setShowButtonsOnSubmit] = useState(true);
     const [paymentStatus, setPaymentStatus] = useState('');
     const [dataToSubmit, setDataToSubmit] = useState(null);
-
     const [step, setStep] = useState(1);
+
+    const validateStep = (currentStep) => {
+        const newErrors = {};
+        const now = new Date();
+
+        if (currentStep === 1) {
+            if (!formData.excursion) newErrors.excursion = 'Escursione è richiesta';
+            if (!formData.departureLocation) newErrors.departureLocation = 'Luogo di partenza è richiesto';
+            if (!formData.dateStart) {
+                newErrors.dateStart = 'Data Partenza è richiesta';
+            } else {
+                const selectedDate = new Date(`${formData.dateStart}T${formData.timeStart || '00:00'}`);
+                if (selectedDate <= now) {
+                    newErrors.dateStart = 'La data non può essere nel passato';
+                }
+            }
+            if (!formData.timeStart) newErrors.timeStart = 'Orario Partenza è richiesto';
+        }
+        // else if (currentStep === 2) {
+        //     if (!formData.flightNumber) newErrors.flightNumber = 'Numero volo è richiesto';
+        //     if (!formData.departureAirport) newErrors.departureAirport = 'Aeroporto di partenza è richiesto';
+        //     if (!formData.departureTime) newErrors.departureTime = 'Orario di partenza è richiesto';
+        //     if (!formData.arrivalAirport) newErrors.arrivalAirport = 'Aeroporto di arrivo è richiesto';
+        //     if (!formData.arrivalTime) newErrors.arrivalTime = 'Orario di arrivo è richiesto';
+        // } 
+        else if (currentStep === 3) {
+            if (!formData.name) newErrors.name = 'Nome è richiesto';
+            if (!formData.surname) newErrors.surname = 'Cognome è richiesto';
+            if (!formData.email) {
+                newErrors.email = 'Email è richiesta';
+            } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email)) {
+                newErrors.email = 'Formato email non valido';
+            } else if (formData.email.length > 254) {
+                newErrors.email = 'Email troppo lunga';
+            }
+            if (!formData.phone) newErrors.phone = 'Telefono è richiesto';
+        }
+
+        return newErrors;
+    };
+
+    const handleStepChange = (newStep) => {
+        if (newStep > step) {
+            const validationErrors = validateStep(step);
+            setErrors(validationErrors);
+            if (Object.keys(validationErrors).length > 0) {
+                console.warn("Errore di validazione, impossibile procedere allo step successivo.");
+                return;
+            }
+        }
+
+        if (newStep >= 1 && newStep <= 4) {
+            console.log("Cambio step:", newStep);
+            if (newStep !== 4) {
+                setShowPayment(false);
+                setShowButtonsOnSubmit(true);
+            }
+            setStep(newStep);
+        } else {
+            console.warn("Step non valido:", newStep);
+        }
+    };
 
     const [formData, setFormData] = useState({
         type: 'escursione',
@@ -58,11 +119,17 @@ const ExcursionBookingForm = forwardRef((props, ref) => {
                     minimumPassengers: 3,
                     duration: 2,
                 },
-                marsala: {
-                    price: 25,
+            }
+        },
+        {
+            id: 2,
+            excursion: "Saline Mamma Caura",
+            departureLocation: {
+                trapani: {
+                    price: 30,
                     minimumPassengers: 3,
-                    duration: 2,
-                }
+                    duration: 3.5,
+                },
             }
         }
     ];
@@ -77,30 +144,6 @@ const ExcursionBookingForm = forwardRef((props, ref) => {
             ...prevErrors,
             [id]: ''
         }));
-    };
-
-    const handleIncrement = () => {
-        setFormData((prevData) => ({
-            ...prevData,
-            passengers: Math.min(prevData.passengers + 1, 16)
-        }));
-    };
-
-    const handleDecrement = () => {
-        setFormData((prevData) => ({
-            ...prevData,
-            passengers: Math.max(prevData.passengers - 1, prevData.minimumPassengers),
-        }));
-    };
-
-    const handlePassengerChange = (e) => {
-        const value = parseInt(e.target.value, 10);
-        if (!isNaN(value)) {
-            setFormData((prevData) => ({
-                ...prevData,
-                passengers: Math.max(Math.min(value, 16), prevData.minimumPassengers),
-            }));
-        }
     };
 
     const handleExcursionChange = (e) => {
@@ -146,26 +189,41 @@ const ExcursionBookingForm = forwardRef((props, ref) => {
         }));
     };
 
-    const validate = () => {
-        const newErrors = {};
-        const now = new Date();
+    const handleIncrement = () => {
+        const selectedExcursion = excursions.find(exc => exc.excursion === formData.excursion);
+        const locationData = selectedExcursion?.departureLocation[formData.departureLocation];
 
-        if (!formData.name) newErrors.name = 'Nome è richiesto';
-        if (!formData.surname) newErrors.surname = 'Cognome è richiesto';
-        if (!formData.email) newErrors.email = 'Email è richiesta';
-        if (!formData.phone) newErrors.phone = 'Telefono è richiesto';
-        if (!formData.excursion) newErrors.excursion = 'L\'escursione è richiesta';
-        if (!formData.dateStart) {
-            newErrors.dateStart = 'Data Partenza è richiesta';
-        } else {
-            const selectedDate = new Date(`${formData.dateStart}T${formData.timeStart || '00:00'}`);
-            if (selectedDate <= now) {
-                newErrors.dateStart = 'La data non può essere nel passato';
-            }
+        if (locationData) {
+            setFormData((prevData) => ({
+                ...prevData,
+                passengers: Math.min(prevData.passengers + 1, 16),
+            }));
         }
-        if (!formData.timeStart) newErrors.timeStart = 'Orario Partenza è richiesto';
+    };
 
-        return newErrors;
+    const handleDecrement = () => {
+        const selectedExcursion = excursions.find(exc => exc.excursion === formData.excursion);
+        const locationData = selectedExcursion?.departureLocation[formData.departureLocation];
+
+        if (locationData) {
+            setFormData((prevData) => ({
+                ...prevData,
+                passengers: Math.max(prevData.passengers - 1, locationData.minimumPassengers),
+            }));
+        }
+    };
+
+    const handlePassengerChange = (e) => {
+        const value = parseInt(e.target.value, 10);
+        const selectedExcursion = excursions.find(exc => exc.excursion === formData.excursion);
+        const locationData = selectedExcursion?.departureLocation[formData.departureLocation];
+
+        if (!isNaN(value) && locationData) {
+            setFormData((prevData) => ({
+                ...prevData,
+                passengers: Math.max(Math.min(value, 16), locationData.minimumPassengers),
+            }));
+        }
     };
 
     const calculatePrice = () => {
@@ -187,7 +245,7 @@ const ExcursionBookingForm = forwardRef((props, ref) => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        const validationErrors = validate();
+        const validationErrors = validateStep(step);
         setErrors(validationErrors);
         if (Object.keys(validationErrors).length > 0) {
             return;
@@ -199,6 +257,7 @@ const ExcursionBookingForm = forwardRef((props, ref) => {
 
         setDataToSubmit(bookingData);
         setShowPayment(true);
+        setShowButtonsOnSubmit(false);
         console.log('Form Data:', bookingData);
     };
 
@@ -226,9 +285,13 @@ const ExcursionBookingForm = forwardRef((props, ref) => {
                 ...dataToSubmit,
                 paymentID: details.id,
                 paymentStatus: details.status,
+                departureLocation: formData.departureLocation, // Ensure departureLocation is included
             };
 
             sendEncryptedBookingData(bookingDetails);
+            sendBookingEmail(bookingDetails);
+            generateAndDownloadPDF(bookingDetails); // Pass the updated bookingDetails
+            setShowPayment(false);
             alert("Prenotazione completata con successo!");
         } catch (error) {
             console.error("Errore durante l'approvazione del pagamento:", error);
@@ -236,9 +299,21 @@ const ExcursionBookingForm = forwardRef((props, ref) => {
         }
     };
 
+    const downloadPDF = async () => {
+        const bookingDetails = {
+            ...dataToSubmit,
+            paymentID: dataToSubmit.paymentID,
+            paymentStatus: dataToSubmit.paymentStatus,
+            departureLocation: formData.departureLocation, // Ensure departureLocation is included
+        };
+        await generateAndDownloadPDF(bookingDetails); // Pass the updated bookingDetails
+        alert("PDF scaricato con successo!");
+    };
+
     return (
         <div id='formTop' ref={excursionBookingFormRef} className='bg-white/90 rounded-md p-5 shadow'>
             <form onSubmit={handleSubmit}>
+                {/* Step 1: Escursione */}
                 {step === 1 && (
                     <>
                         <div className='grid grid-cols-1 md:grid-cols-2 gap-5 mb-5'>
@@ -247,7 +322,7 @@ const ExcursionBookingForm = forwardRef((props, ref) => {
                                 <div className='flex justify-between'>
                                     <label htmlFor="excursion">{getLabel("excursion")}</label>
                                     {formData.duration && (
-                                        <label htmlFor="excursion">{getLabel("duration")}: {formData.duration} Min</label>
+                                        <label htmlFor="excursion">{getLabel("duration")}: {formData.duration} H</label>
                                     )}
                                 </div>
                                 <select className={classes} name="excursion" id="excursion" value={formData.excursion}
@@ -353,10 +428,11 @@ const ExcursionBookingForm = forwardRef((props, ref) => {
                             />
                         </div>
 
-                        <button onClick={() => setStep(2)} type="button" className="bg-c text-white rounded-md flex justify-center items-center p-3 w-full uppercase">{getLabel("next")}</button>
+                        <button onClick={() => handleStepChange(2)} type="button" className="bg-c text-white rounded-md flex justify-center items-center p-3 w-full uppercase">{getLabel("next")}</button>
                     </>
                 )}
 
+                {/* Step 2: Informazioni sul volo */}
                 {step === 2 && (
                     <>
                         <p className="text-center text-xl uppercase">{getLabel('flightInfoTitle')}</p>
@@ -393,12 +469,13 @@ const ExcursionBookingForm = forwardRef((props, ref) => {
                             </div>
                         </div>
                         <div className='flex items-center justify-center'>
-                            <button onClick={() => setStep(1)} type="button" className="bg-c text-white rounded-md flex justify-center items-center p-3 w-full uppercase me-5">{getLabel("back")}</button>
-                            <button onClick={() => setStep(3)} type="button" className="bg-c text-white rounded-md flex justify-center items-center p-3 w-full uppercase">{getLabel("next")}</button>
+                            <button onClick={() => handleStepChange(1)} type="button" className="bg-c text-white rounded-md flex justify-center items-center p-3 w-full uppercase me-5">{getLabel("back")}</button>
+                            <button onClick={() => handleStepChange(3)} type="button" className="bg-c text-white rounded-md flex justify-center items-center p-3 w-full uppercase">{getLabel("next")}</button>
                         </div>
                     </>
                 )}
 
+                {/* Step 3: Informazioni cliente */}
                 {step === 3 && (
                     <>
                         <p className="text-center text-xl uppercase">{getLabel('customerInfoTitle')}</p>
@@ -435,41 +512,43 @@ const ExcursionBookingForm = forwardRef((props, ref) => {
                         </div>
 
                         <div className='flex items-center justify-center'>
-                            <button onClick={() => setStep(2)} type="button" className="bg-c text-white rounded-md flex justify-center items-center p-3 w-full uppercase me-5">{getLabel("back")}</button>
-                            <button onClick={() => setStep(4)} type="button" className="bg-c text-white rounded-md flex justify-center items-center p-3 w-full uppercase">{getLabel("next")}</button>
+                            <button onClick={() => handleStepChange(2)} type="button" className="bg-c text-white rounded-md flex justify-center items-center p-3 w-full uppercase me-5">{getLabel("back")}</button>
+                            <button onClick={() => handleStepChange(4)} type="button" className="bg-c text-white rounded-md flex justify-center items-center p-3 w-full uppercase">{getLabel("next")}</button>
                         </div>
                     </>
                 )}
 
+                {/* Step 4: Riepilogo e pagamento */}
                 {step === 4 && (
                     <>
-                        {!showPayment && (
-                            <>
-                                <div className="bg-b rounded-md flex flex-col p-5 mb-5">
-                                    <h2 className="text-xl font-bold mb-3">{getLabel("bookingSummary")}</h2>
-                                    <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
-                                        <div>
-                                            <p><strong>{getLabel("name")}:</strong> {formData.name} {formData.surname}</p>
-                                            <p><strong>{getLabel("email")}:</strong> {formData.email}</p>
-                                            <p><strong>{getLabel("phone")}:</strong> {formData.phone}</p>
 
-                                            <p><strong>{getLabel("flightNumber")}:</strong> {formData.flightNumber}</p>
-                                            <p><strong>{getLabel("departureAirport")}:</strong> <br />{formData.departureAirport} <strong>{getLabel("time")}</strong>: {formData.departureTime}</p>
+                        <div className="bg-b rounded-md flex flex-col p-5 mb-5">
+                            <h2 className="text-xl font-bold mb-3">{getLabel("bookingSummary")}</h2>
+                            <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
+                                <div>
+                                    <p><strong>{getLabel("name")}:</strong> {formData.name} {formData.surname}</p>
+                                    <p><strong>{getLabel("email")}:</strong> {formData.email}</p>
+                                    <p><strong>{getLabel("phone")}:</strong> {formData.phone}</p>
 
-                                            <p><strong>{getLabel("arrivalAirport")}:</strong> <br />{formData.arrivalAirport} <strong>{getLabel("time")}</strong>: {formData.arrivalTime}</p>
-                                        </div>
-                                        <div>
+                                    <p><strong>{getLabel("flightNumber")}:</strong> {formData.flightNumber}</p>
+                                    <p><strong>{getLabel("departureAirport")}:</strong> <br />{formData.departureAirport} <strong>{getLabel("time")}</strong>: {formData.departureTime}</p>
 
-                                            <p><strong>{getLabel("excursion")}: <br /></strong> {formData.excursion}</p>
-                                            <p><strong>{getLabel("excursionDepartureLocation")}:</strong> {formData.departureLocation}</p>
-                                            <p><strong>{getLabel("dateStart")}:</strong> {formData.dateStart} {formData.timeStart}</p>
-
-                                            <p><strong>{getLabel("passengers")}:</strong> {formData.passengers}</p>
-                                            <p><strong>{getLabel("notes")}:</strong> {formData.message || getLabel("noNotes")}</p>
-                                            <p><strong>{getLabel("price")}:</strong> {calculatePrice()} €</p>
-                                        </div>
-                                    </div>
+                                    <p><strong>{getLabel("arrivalAirport")}:</strong> <br />{formData.arrivalAirport} <strong>{getLabel("time")}</strong>: {formData.arrivalTime}</p>
                                 </div>
+                                <div>
+
+                                    <p><strong>{getLabel("excursion")}: <br /></strong> {formData.excursion}</p>
+                                    <p><strong>{getLabel("excursionDepartureLocation")}:</strong> {formData.departureLocation}</p>
+                                    <p><strong>{getLabel("dateStart")}:</strong> {formData.dateStart} {formData.timeStart}</p>
+
+                                    <p><strong>{getLabel("passengers")}:</strong> {formData.passengers}</p>
+                                    <p><strong>{getLabel("notes")}:</strong> {formData.message || getLabel("noNotes")}</p>
+                                    <p><strong>{getLabel("price")}:</strong> {calculatePrice()} €</p>
+                                </div>
+                            </div>
+                        </div>
+                        {!paymentStatus && showButtonsOnSumbit && (
+                            <>
                                 <div className='mb-5'>
                                     <label className='flex items-center justify-center'>
                                         <input required type="checkbox" id="acceptTerms" className="form-checkbox h-5 w-5 text-blue-600" />
@@ -478,7 +557,7 @@ const ExcursionBookingForm = forwardRef((props, ref) => {
                                 </div>
 
                                 <div className='flex items-center justify-center'>
-                                    <button onClick={() => setStep(3)} type="button" className="bg-c text-white rounded-md flex justify-center items-center p-3 w-full uppercase me-5">{getLabel("back")}</button>
+                                    <button onClick={() => handleStepChange(3)} type="button" className="bg-c text-white rounded-md flex justify-center items-center p-3 w-full uppercase me-5">{getLabel("back")}</button>
                                     <button
                                         type="submit"
                                         className="bg-c text-white rounded-md flex justify-center items-center p-3 w-full uppercase"
@@ -488,20 +567,71 @@ const ExcursionBookingForm = forwardRef((props, ref) => {
                                 </div>
                             </>
                         )}
-                        <button
-                            type="button"
-                            className="bg-gray-500 text-white rounded-md flex justify-center items-center p-3 w-full uppercase mt-5"
-                            onClick={() => testBookingFlow()}
-                        >
-                            Test Flow
-                        </button>
+                        {showPayment && !showButtonsOnSumbit && !paymentStatus && (
 
+                            <button onClick={() => handleStepChange(3)} type="button" className="bg-c text-white rounded-md flex justify-center items-center p-3 w-full uppercase me-5">{getLabel("back")}</button>
+
+                        )}
                     </>
                 )}
+            </form >
 
-            </form>
-        </div>
+            {paymentStatus === 'COMPLETED' ? (
+                <></>
+            ) : (
+                showPayment && (
+                    <>
+                        <div className="d-flex items-center justify-center mt-5">
+                            <div className="checkout">
+                                {isPending ? (
+                                    <p className='uppercase'>{getLabel("loading")}</p>
+                                ) : (
+                                    <PayPalButtons
+                                        style={{ layout: "vertical" }}
+                                        createOrder={(data, actions) => onCreateOrder(data, actions)}
+                                        onApprove={(data, actions) => onApproveOrder(data, actions)}
+                                    />
+                                )}
+                            </div>
+                        </div>
+                    </>
+                )
+            )}
+
+            {paymentStatus && (
+                <div className="bg-b rounded-md flex flex-col p-3">
+                    {paymentStatus === 'COMPLETED' ? (
+                        <div className="text-green-600">
+                            <p>{getLabel("thankYouBooking")}</p>
+                            <br />
+                            <p>{getLabel("PDFMessage")}</p>
+                            <button
+                                type="button"
+                                className="bg-c text-white rounded-md flex justify-center items-center p-3 w-full mt-5"
+                                onClick={() => downloadPDF()}
+                            >
+                                {getLabel("downloadPDF")}
+                            </button>
+                        </div>
+                    ) : (
+                        <div className="text-red-600">
+                            <h2 className="font-semibold text-lg mb-2">{getLabel("paymentError")}</h2>
+                            <p>{getLabel("paymentErrorDescription")}</p>
+                        </div>
+                    )}
+
+                    <button
+                        type="button"
+                        className="bg-c text-white rounded-md flex justify-center items-center p-3 w-full mt-5"
+                        onClick={() => window.location.reload()}
+                    >
+                        {getLabel("backHome")}
+                    </button>
+                </div>
+            )}
+        </div >
     );
 });
+
 
 export default ExcursionBookingForm;
