@@ -38,7 +38,7 @@ export default function Transfer() {
             </div>
 
             <div id="transferForm"
-                // style={{ height: transferBookingFormHeight + 100 }}
+                style={{ height: transferBookingFormHeight + 100 }}
                 className="w-full h-dvh flex items-center justify-center">
                 <div className="w-full md:w-1/2 p-1 ">
                     <PayPalScriptProvider options={initialOptions}>

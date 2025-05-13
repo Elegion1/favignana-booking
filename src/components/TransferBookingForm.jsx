@@ -386,8 +386,11 @@ const TransferBookingForm = forwardRef((props, ref) => {
             purchase_units: [
                 {
                     amount: {
+                        currency_code: "EUR",
                         value: calculatePrice(),
                     },
+                    custom_id: dataToSubmit.code,
+                    description: `Transfer - Tratta: ${dataToSubmit.route} - ${dataToSubmit.passengers} PAX`,
                 },
             ],
         });

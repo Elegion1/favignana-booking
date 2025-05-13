@@ -268,8 +268,11 @@ const ExcursionBookingForm = forwardRef((props, ref) => {
             purchase_units: [
                 {
                     amount: {
+                        currency_code: "EUR",
                         value: calculatePrice(),
                     },
+                    custom_id: dataToSubmit.code,
+                    description: `Escursione: ${dataToSubmit.excursion} Partenza da: ${dataToSubmit.departureLocation} - ${dataToSubmit.passengers} PAX`,
                 },
             ],
         });

@@ -97,7 +97,7 @@ select:focus {
 #excursionForm {
   background-image: url("../public/museo-del-sale.jpeg");
   background-size: cover;
-  background-position: center;
+  background-position: bottom;
   background-repeat: no-repeat;
 }
 
@@ -120,7 +120,7 @@ select:focus {
 }
 
 @media screen and (max-width: 1092px) {
-  #transferForm {
+  #transferForm, #excursionForm {
     background-size: cover; /* Copre l'intera area */
     background-position: center;
   }
