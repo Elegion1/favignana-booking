@@ -1,6 +1,5 @@
 import { Routes, Route, useLocation } from "react-router-dom";
 import { useEffect } from "react";
-import { Helmet } from "react-helmet";
 
 import './App.css';
 
