@@ -1,5 +1,6 @@
-import { BrowserRouter, Routes, Route, useNavigate, useLocation } from "react-router-dom";
+import { Routes, Route, useLocation } from "react-router-dom";
 import { useEffect } from "react";
+import { Helmet } from "react-helmet";
 
 import './App.css';
 
@@ -10,10 +11,11 @@ import Contact from './pages/Contact';
 import TermsAndConditions from "./pages/TermsAndConditions";
 import Excursion from "./pages/Excursion";
 
+
 function RedirectHandler() {
   const navigate = useNavigate();
   const location = useLocation();
-  
+
   useEffect(() => {
     const searchParams = new URLSearchParams(location.search);
     const redirectPath = searchParams.get("redirect");
@@ -27,18 +29,39 @@ function RedirectHandler() {
 
 function App() {
   return (
-    <BrowserRouter>
-      <RedirectHandler /> {/* Gestisce il redirect */}
+    <>
+
       <Routes>
-        <Route path="/" element={<Layout />}>
-          <Route index element={<Home />} />
-          <Route path="/transfer" element={<Transfer />} />
-          <Route path="/contact" element={<Contact />} />
+        <Route path="/" element={
+          <>
+            <Layout />
+          </>
+        }>
+          <Route index element={
+            <>
+              <Home />
+            </>
+          }
+          />
+          <Route path="/transfer" element={
+            <>
+              <Transfer />
+            </>
+          } />
+          <Route path="/contact" element={
+            <>
+              <Contact />
+            </>
+          } />
           <Route path="/terms-and-conditions" element={<TermsAndConditions />} />
-          <Route path="/excursion" element={<Excursion />} />
+          <Route path="/excursion" element={
+            <>
+              <Excursion />
+            </>
+          } />
         </Route>
       </Routes>
-    </BrowserRouter>
+    </>
   );
 }
 

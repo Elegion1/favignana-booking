@@ -30,6 +30,7 @@ export default function Excursion() {
 
     return (
         <>
+            
             <div id="excursionInfo" className="p-10">
                 <p className="md:px-30 text-justify">
                     {getLabel('excursionDescription')}

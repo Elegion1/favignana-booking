@@ -30,6 +30,7 @@ export default function Transfer() {
 
     return (
         <>
+            
             <div id="transferInfo" className="p-10">
                 <p className="md:px-30 text-justify mb-5">
                     {getLabel("transferDescription")}
