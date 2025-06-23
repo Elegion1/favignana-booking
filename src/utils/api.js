@@ -20,7 +20,7 @@ const generateBookingCode = async () => {
       }
     );
     const result = await response.json();
-    console.log("Response:", result);
+    // console.log("Response:", result);
     return result.code;
   } catch (error) {
     console.error(

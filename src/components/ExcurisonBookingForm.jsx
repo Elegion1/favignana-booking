@@ -258,7 +258,7 @@ const ExcursionBookingForm = forwardRef((props, ref) => {
         setDataToSubmit(bookingData);
         setShowPayment(true);
         setShowButtonsOnSubmit(false);
-        console.log('Form Data:', bookingData);
+        // console.log('Form Data:', bookingData);
     };
 
     const [{ options, isPending }, dispatch] = usePayPalScriptReducer();
@@ -282,7 +282,7 @@ const ExcursionBookingForm = forwardRef((props, ref) => {
         try {
             const details = await actions.order.capture();
             setPaymentStatus(details.status);
-            console.log('Payment Details:', details);
+            // console.log('Payment Details:', details);
 
             const bookingDetails = {
                 ...dataToSubmit,

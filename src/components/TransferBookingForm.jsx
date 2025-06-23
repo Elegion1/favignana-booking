@@ -348,7 +348,7 @@ const TransferBookingForm = forwardRef((props, ref) => {
                 totalPrice += calculateVehiclePrice(remainingPassengers);
             }
 
-            console.log('Total Price:', totalPrice);
+            // console.log('Total Price:', totalPrice);
             totalPrice = returnPrice(totalPrice);
 
             return totalPrice;
@@ -400,7 +400,7 @@ const TransferBookingForm = forwardRef((props, ref) => {
         try {
             const details = await actions.order.capture();
             setPaymentStatus(details.status);
-            console.log('Payment Details:', details);
+            // console.log('Payment Details:', details);
 
             const bookingDetails = {
                 ...dataToSubmit,
