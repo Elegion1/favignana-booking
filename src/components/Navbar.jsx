@@ -1,4 +1,4 @@
-import { NavLink } from 'react-router-dom';
+import { Link, NavLink } from 'react-router-dom';
 import { getLabel } from '../utils/labels';
 
 
@@ -31,9 +31,9 @@ export default function Navbar() {
         <>
             <div className='absolute flex justify-center items-center z-10 bg-gray-200/35 w-full'>
                 {/* LOGO SINISTRA visibile solo su schermo grande */}
-                <a href="/">
+                <Link to="/">
                     <img className='hidden md:block md:max-w-25 max-w-10 md:me-10' src="./logo-no-background.png" alt="mg-transfer-logo" />
-                </a>
+                </Link>
 
                 <div className="h-24 top-0 left-0 flex justify-center items-center flex-col">
                     <div>

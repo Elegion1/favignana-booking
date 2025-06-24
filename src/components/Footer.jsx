@@ -1,4 +1,5 @@
 import { getLabel } from "../utils/labels";
+import { Link } from "react-router-dom";
 
 export default function Footer() {
     const contacts = [
@@ -23,7 +24,7 @@ export default function Footer() {
                     <div className="flex flex-col justify-center md:items-start items-center">
                         <h5 className="text-2xl uppercase mb-3">{getLabel("footerTitle")}</h5>
                         <p>{getLabel("footerBody")}</p>
-                        <a className="mt-10 text-c" href="/terms-and-conditions">{getLabel("termsConditions")}</a>
+                        <Link className="mt-10 text-c" to="/terms-and-conditions">{getLabel("termsConditions")}</Link>
                     </div>
                     <div className="flex justify-center items-center">
                         <img className="w-[200px]" src="./logo-color.png" alt="" />

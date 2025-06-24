@@ -1,6 +1,7 @@
 import { useState, useEffect, useRef } from "react";
 import { getLabel } from '../utils/labels';
 import Info from "../components/Info";
+import { Link } from "react-router-dom";
 
 export default function Home() {
     const [infoHeight, setInfoHeight] = useState(0);
@@ -53,9 +54,9 @@ export default function Home() {
                     <h2 className="text-2xl mb-3">{getLabel("CTATitle")}</h2>
                     <p className="mb-4">{getLabel("CTABody")}</p>
 
-                    <a className="inline-block bg-c p-4 uppercase text-a" href="/transfer">
+                    <Link className="inline-block bg-c p-4 uppercase text-a" to="/transfer">
                         {getLabel("CTAButton")}
-                    </a>
+                    </Link>
 
                 </div>
 
@@ -65,9 +66,9 @@ export default function Home() {
                     <h2 className="text-2xl mb-3">{getLabel("CTATitle2")}</h2>
                     <p className="mb-4">{getLabel("CTABody2")}</p>
 
-                    <a className="inline-block bg-c p-4 uppercase text-a" href="/excursion">
+                    <Link className="inline-block bg-c p-4 uppercase text-a" to="/excursion">
                         {getLabel("CTAButton2")}
-                    </a>
+                    </Link>
 
                 </div>
 
